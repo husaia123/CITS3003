@@ -23,16 +23,19 @@ void PanningCamera::update(const Window& window, float dt, bool controls_enabled
         }
 
         if (!resetSeq) {
-            // Extract basis vectors from inverse view matrix to find world space directions of view space basis
-            auto x_basis = glm::vec3{inverse_view_matrix[0]};
-            auto y_basis = glm::vec3{inverse_view_matrix[1]};
-
-            auto pan = window.get_mouse_delta(GLFW_MOUSE_BUTTON_MIDDLE);
-            focus_point += (x_basis * (float) -pan.x + y_basis * (float) pan.y) * PAN_SPEED * dt * distance / (float) window.get_window_height();
-
             pitch -= PITCH_SPEED * (float) window.get_mouse_delta(GLFW_MOUSE_BUTTON_RIGHT).y;
             yaw -= YAW_SPEED * (float) window.get_mouse_delta(GLFW_MOUSE_BUTTON_RIGHT).x;
             distance -= ZOOM_SCROLL_MULTIPLIER * ZOOM_SPEED * window.get_scroll_delta();
+
+            // Compute rotation matrix for current yaw and pitch
+            auto rot_matrix = glm::rotate(yaw, UP) * glm::rotate(pitch, RIGHT);
+
+            // Extract right and up vectors for panning
+            auto x_basis = glm::vec3{rot_matrix[0]};
+            auto y_basis = glm::vec3{rot_matrix[1]};
+
+            auto pan = window.get_mouse_delta(GLFW_MOUSE_BUTTON_MIDDLE);
+            focus_point += (x_basis * (float) -pan.x + y_basis * (float) pan.y) * PAN_SPEED * dt * distance / (float) window.get_window_height();
 
             auto is_dragging = window.is_mouse_pressed(GLFW_MOUSE_BUTTON_RIGHT) || window.is_mouse_pressed(GLFW_MOUSE_BUTTON_MIDDLE);
             if (is_dragging) {
@@ -45,7 +48,12 @@ void PanningCamera::update(const Window& window, float dt, bool controls_enabled
     pitch = clamp(pitch, PITCH_MIN, PITCH_MAX);
     distance = clamp(distance, MIN_DISTANCE, MAX_DISTANCE);
 
-    view_matrix = glm::translate(glm::vec3{0.0f, 0.0f, -distance});
+    // Compute final rotation matrix
+    auto rot_matrix = glm::rotate(yaw, UP) * glm::rotate(pitch, RIGHT);
+    auto forward = -glm::vec3{rot_matrix[2]};
+    auto camera_position = focus_point + distance * forward;
+
+    view_matrix = glm::lookAt(camera_position, focus_point, glm::vec3{rot_matrix[1]});
     inverse_view_matrix = glm::inverse(view_matrix);
 
     projection_matrix = glm::infinitePerspective(fov, window.get_framebuffer_aspect_ratio(), 1.0f);
