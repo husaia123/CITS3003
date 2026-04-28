@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Lights.cpp</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link" href="../Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link" href="FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link" href="FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link" href="PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link" href="PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link" href="BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link" href="Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link active" href="Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link" href="vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link" href="frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>Lights.cpp</h1>
+<br>
+<h3>Location in Project</h3>
+<p>src/rendering/scene/Lights.cpp</p>
+<br>
+<h3>Functionality and Purpose of this File</h3>
+<p>In this file, the functions <code><a href="#GetNearestPointLights">get_nearest_point_lights</a></code> and <code><a href="#GetNearestLights">get_nearest_lights</a></code> are defined. From a high level overview, these functions are used in the <code>render</code> functions of <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code> and <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code>, where they are used more specifically to determine the subset of point lights we provide information about to the shaders.</p>
+<br>
+<h2>Method Documentation</h2>
+<br>
+<div id="GetNearestPointLights">
+    <h3><code>std::vector&#60;PointLight> LightScene::<b>get_nearest_point_lights</b>(glm::vec3 target, size_t max_count, size_t min_count)</code></h3>
+    <p>This function simply calls <code><a href="#GetNearestLights">get_nearest_lights</a></code> with the set of point lights, <code>point_lights</code>, as an input parameter.</p>
+    <h4>Parameters</h4>
+    <p><code>glm::vec3 target</code>: The target location which is used as a reference point to determine which point lights are nearest.</p>
+    <p><code>size_t max_count</code>: The upper bound on the number of nearest point lights.</p>
+    <p><code>size_t min_count</code>: The lower bound on the number of nearest point lights.</p>
+    <h4>Returns</h4>
+    <p><code>std::vector&#60;PointLight&#62;</code>: A vector of point lights containing the output of <code><a href="#GetNearestLights">get_nearest_lights</a></code>.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called inside the <code>render</code> functions of <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code> and <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="GetNearestLights">
+    <h3><code>std::vector&#60;Light> LightScene::<b>get_nearest_lights</b>(const std::unordered_set&#60;std::shared_ptr&#60;Light>>& lights, glm::vec3 target, size_t max_count, size_t min_count)</code></h3>
+    <p>This function identifies the nearest lights based on the provided set of lights, and returns a vector containing a number of them bounded between <code>min_count</code> and <code>max_count</code>. Note that this function is generic, you can see this because it uses <code>template&#60;typename Light></code> above it's function definition here, and above it's function declaration in <code><a href="Lights.h.html">Lights.h</a></code>. I suggest you do your own research into templates in C++ if you are not familiar with them, but to briefly summarise, this allows the function to work when the input parameter <code>lights</code> has type <code>std::unordered_set&#60;std::shared_ptr&#60;PointLight>></code>, as is the case when we use <code>get_nearest_point_lights</code>, and also work if we used an unordered set of a <i>different</i> light type as an input parameter.</p>
+    <h4>Parameters</h4>
+    <p><code>glm::vec3 target</code>: The target location which we use as a reference point to determine which lights are nearest.</p>
+    <p><code>size_t max_count</code>: The upper bound on the number of nearest lights this function will identify and return.</p>
+    <p><code>size_t min_count</code>: The lower bound on the number of nearest lights this function will identify and return.</p>
+    <h4>Returns</h4>
+    <p><code>std::vector&#60;PointLight&#62;</code>: A vector containing the nearest lights, with the number of lights bounded between <code>max_count</code> and <code>min_count</code>. Specifically, if the number of lights in the input set is less than <code>min_count</code>, the returned vector will contain all lights in the set with <b>additional "off" lights</b> to make up the difference, if the number of lights in the input set is equal to or greater than <code>min_count</code> and equal to or lesser than <code>max_count</code>, the returned vector will simply return all lights in the set, and if the number of lights in the input set is greater than <code>max_count</code> the returned vector will contain only the nearest <code>max_count</code> lights.</p>
+    <h4>Where is this called?</h4>
+    <p>This is only called by <code><a href="#GetNearestPointLights">get_nearest_point_lights</a></code> in <code>Lights.cpp</code>.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CITS3003 Computer Graphics and Animation</title>
+	
+	
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    
+
+	
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+			 /*background: linear-gradient(to right, #FFFFFF, #E0FFFF, #AFEEEE, #48D1CC, #40E0D0); */
+			 background: linear-gradient(to right,   #FFFFFF, #c0ebd8, #b0e6d0, #a0e0c8, #90dbc0);
+		h1 { font-size: 2em; color: navy; font-weight: bold; }
+		h2 { font-size: 1.5em; color: olive; font-weight: normal; }
+		h3 { font-size: 1.6em; color: navy; font-weight: bold; border-bottom: 1px solid black; padding-bottom: 5px; margin-bottom: 10px; }
+		h4 { text-shadow: 2px 2px 2px #aaa; font-size: 1.5em; color: navy; font-weight: normal; }
+		h5 { font-size: 1em; padding: 5px; color: navy }
+		/*h6 { border-bottom: 1px solid black; padding-bottom: 5px; margin-bottom: 10px; }*/
+        h6 { font-size: 1.4em; font-weight: bold; color: black; border-bottom: 2px solid #ccc; padding-bottom: 5px; margin: 0 0 15px 0;display: block;}
+
+		hr {
+    border: none;
+    height: 2px;
+    background-color: #ccc;
+    margin: 20px 0;
+}
+		
+		code {
+			font-family: 'Courier New', monospace; /* Monospace font for code */
+			background-color: #f5f5f5; /* Light grey background */
+			border: 1px solid #ccc; /* Subtle border */
+			border-radius: 1px; /* Rounded corners for a modern look */
+			padding: 1px; /* Padding for better readability */
+			font-size: 90%; /* Slightly smaller font size than the surrounding text */
+		}		
+		
+		ol {
+				padding-left: 20px; /* Adjusts padding inside the list */
+				margin-bottom: 15px; /* Space below each list */
+				margin-left: 20px; /* Adjust as needed */
+			}
+			li {
+				margin-bottom: 10px; /* Space between list items */
+			}
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-left: 0;
+		}
+			}
+		
+		th, td {
+			border: 1.5px solid black; /* Light grey border */
+			padding: 8px; /* Spacing inside cells */
+		}
+		th {
+			text-align: left; /* Align header text to the left */
+			background-color: #f2f2f2; /* Light grey background for headers */
+			padding-top: 12px;
+			padding-bottom: 12px;
+		}
+		td {
+			text-align: left; /* Align cell text to the left */
+		}
+		tr:hover {background-color: #ddd;}
+		
+		pre {
+			background-color: #f5f5f5; /* Light grey background */
+			border: 1px solid #ddd; /* Subtle border */
+			border-radius: 5px; /* Rounded corners */
+			padding: 10px; /* Padding inside the pre tag */
+			overflow-x: auto; /* Horizontal scrolling for long lines */
+			font-family: 'Courier New', monospace; /* Monospace font */
+		}
+		
+		.text-image-container {
+			display: flex;
+			align-items: center;
+		}
+		.text-image-container img {
+			margin-left: 10px; /* Adjust spacing as needed */
+		}
+				
+}
+    <!-- More rows and cells here -->
+</table>
+
+.spacious-paragraph {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    line-height: 3;
+}
+
+.section-header {
+        font-size: 1.3em;
+        font-weight: normal;
+        color: black;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 5px;
+        margin: 0 0 15px 0;
+        display: block; /* ensures full-width line */
+    }
+			
+     </style> 	
+
+
+
+	 <style  TYPE="text/css">  
+    .paraHead { font-weight: bold; }
+    .important { background: #ffeeaa ; margin: 5px 0px 2px 0px; }
+    .newImportant { background: #ffff00 ! important; margin: 5px 0px 2px 0px; }
+    .solution:link { background: #aaaaaa ; margin: 5px 0px 2px 15px; }
+    .reading { align=right }
+    .deleted { text-decoration: line-through; }
+	
+		
+   </style> 
+  
+	
+	<script type="text/javascript">
+	//<![CDATA[
+	var pageTracker = window.pageTracker;
+	uwaCore.jsLazyLoad('http://static.weboffice.uwa.edu.au/stats/uwa_ga.js', function() {
+	  var trackerId = 'UA-7622267-1';
+		if ( trackerId != '' ) { try {
+		  pageTracker = _gat._getTracker(trackerId);
+		  pageTracker._setDomainName(".uwa.edu.au");
+		  pageTracker._trackPageview();
+		} catch(err) {} } });
+	//]]>
+	</script>
+
+	
+	  
+</head>
+
+
+<body>
+    <header>
+        <h1>CITS3003 Graphics & Animation Project-2026</h1>
+        <!-- Add navigation menu or logo here -->
+    </header>
+
+    <main>
+        <section>
+		
+<h4> Project submission is due on Monday 18.05.2026 (23:59 hrs)</h4>
+
+    <p>
+        The project will be marked out of 70 but is worth 25% of the total unit marks.
+    </p>
+    <p>
+        <hr>
+	<h6>Groups</h6>
+
+		<p>The project is designed to be completed in <span class="important">groups of two</span>,
+        and while there are certain circumstances where an individual submission may be allowed,
+        this is not recommended. Even though you'll be working in groups, it’s expected that every member contributes to and has a thorough understanding of all the project tasks.
+		Please note that project groups cannot exceed two people. You are free to choose your
+        project partner.
+		</p>
+		
+		<li>One member of each team must provide information about their project partners by <span class="important">Thursday 16.04.26</span>,
+        1700 hrs. This information is crucial for us to ensure a smooth coordination. </li>
+        <li>To submit the necessary information, please fill in the details in the spreadsheet provided in the link below:</li>
+    </p>
+    
+        <ul> 
+		<li> <a href="https://docs.google.com/spreadsheets/d/16FWb_S9JR_lAZuS1CPYaTzHDSK19F3Bpj0NlGIj2nRU/edit?gid=0#gid=0" target="_blank">Open Google Spreadsheet</a>
+
+		
+          </li>  
+               
+            </ul>
+        </ul>
+    
+
+    
+Note: Please ensure that you provide accurate and complete information to avoid any confusion or delays. 
+Also, <strong>do not email </strong> the group details to the unit coordinator.	
+If you fail to enter your group's details in the spreadsheet by 16.04.26, we will assume that you are doing the project individually.
+
+<h5>Do not know anyone in the cohort?</h5>
+<p>
+In general, it is best to form groups by attending lectures, interacting during class, or teaming up with someone you already know. 
+    This often leads to better communication and collaboration throughout the project.
+However, if you are unable to find a group partner and and prefer to be assigned to a group, simply input your information into the
+ spreadsheet provided below. Ensure you do this by <span class="important">Wednesday 15.04.26</span>. After the deadline, we will organize participants into groups based on the details submitted. You will then be able to contact your group members and start collaborating.
+</p>
+<ul>
+<li> <a href="https://docs.google.com/spreadsheets/d/1-XvjjgHnHtyivHUbBEMQDOYTk1KxxtKIu2BjxtGPOp8/edit?gid=0#gid=0">Open Spreadsheet (only for Individuals looking for a group partner)</a>
+	
+          </li> 
+</ul>
+
+In the meantime, I encourage you to take this opportunity to understand the project on your own and not let this time go to waste. The project requires your full dedication, and it is essential that you use your time efficiently. 
+
+</span>
+    <p></p>
+
+
+    <!-- <p class="important"> You don't need to inform me of the group memberships now. I will find them from your submitted reports. </p> -->
+
+    <!--
+    <p>
+    Please use the <a href="https://secure.csse.uwa.edu.au/run/help3003">cshelp forum</a>
+    if you need to find another student to form a project group.
+    </p>
+    -->
+<hr>
+    <h6>Project Submission:</h6>
+    <p>You will submit your files through LMS. The submission link will appear in Week#11.
+        You must submit a zip file that retains the directory structure of the program (to ensure that your program
+        works when we test it) and should include:
+    </p>
+    <ul>
+        <li>header files
+        </li>
+
+        <li>base code
+
+
+        </li>
+
+        <li>ReadMe file that clearly states the OS used for the project. You can also specify any other requirements or
+            procedures to run your project.
+        </li>
+
+
+        <li>Project report (details of which are mentioned below)
+        </li>
+
+	<li>Short demo video for Task I
+        </li>
+
+        </p>
+    </ul>
+
+    <p><b>Project Report:</b></p>
+    
+	
+	<ul>
+    <li>The project report should be in PDF format. Please mention your full names and student numbers on the first page of the report. Please name your report file as <code>report_student1ID_student2ID.pdf</code>.</li>
+    <li>Your project report should discuss the following:
+<p></p>
+        <ul>
+            <li>Which parts of the project are functional? (i.e., which parts were you able to complete?).</li>
+            <li>Which parts are not functional? (i.e., which parts you could not attempt?)</li>
+            <li>Which parts are partially functional.</li>
+            <li>The steps you followed in building your program, focusing on the problems that you needed to solve in this process. This description can be brief.</li>
+            <li>Additional functionalities (those of you who went beyond what is asked for in the project, can use this document to report the extra features)-this however is optional.</li>
+        </ul>
+    </li>
+    <li>There is no specific format of the report. However, it has a very specific purpose. At your demo, you should expect your marker to have seen your report beforehand.</li>
+    <li>Your report should be able to clearly show what worked in your solution (which you can later demonstrate).</li>
+    <li>In your report, you can also take help from figures (e.g., screen shots), to make it more presentable.</li>
+    <li>Do not use the report to give OS specific details. Use a ReadMe file for that purpose, which can be as detailed as you like.</li>
+</ul>
+
+
+
+    <p><b>Note:</b></p>
+
+    <p> You may get heavily penalised for not submitting the project report, because your marker may not be able to
+        assess your project accurately during a few minutes demo. Moreover, only one report and one submission are
+        required from each group.
+    </p>
+
+<hr>
+    <h6>Project Demonstration:</h6>
+    <p>It is <span class="important">mandatory</span> for each group to demonstrate their project in Week#12. Here are a few things to keep in mind for
+        your demo:
+
+<ul>
+   
+    <li>Ensure that you have submitted your project before the demonstration.</li>
+    <li>Expect to answer questions and participate in cross-questioning during the demonstration.</li>
+    <li>Your performance during the Q&A session will impact the marks you receive for different parts of the project.</li>
+	<li>Each group member will be assessed individually, based on their contribution to the project and their understanding of the project as a whole.</li>
+	
+    <li>Demonstrating your project is crucial, except under special circumstances. <span class="important">Failing to demonstrate the project will result in a nil score</span> for the coding and understanding components. </li>
+ <li>To reserve a time slot, kindly review the available options in the spread sheet: <a href="https://docs.google.com/spreadsheets/d/1PGZzRXs7LZuNWmln9pOl-F9XCHjy6ONQgnPG3bHq2JE/edit?gid=0#gid=0"> Project Demo Schedule</a>
+</li>
+<li>The deadline to reserve the time slot for your demo is 11/05/26 (Monday), 11:59 PM. </li>
+    
+</ul>
+
+
+    <p>Details regarding the schedule of demonstrations would be announced on LMS after week#10
+
+    </p>
+
+<hr>
+    <h6> Project </h6>
+
+    <h4>The main project task</h4>
+
+    You are required to complete an implementation of a simple scene editor that
+    allows a collection of objects to be arranged in a scene and various
+    properties of them to be changed, such as colour, shininess and texture. Below is a list of the specific features (tasks) that must be implemented in the scene editor, 
+	along with sample videos to illustrate their functionality.
+
+    <ul>
+
+			
+			<li>Download the starting point file <b>cits3003_project.zip</b> and follow the instructions in <b>Project_Set_Up_Guide.pdf</b> to build the project files.</li>
+			<li>We've also included detailed documentation of the project in the file <b>cits3003_project_documentation.zip</b>. While it's not mandatory to read the entire documentation, doing so will significantly enhance your understanding of the project's overall structure and the details of various functions.</li>
+			
+			
+    </ul>
+
+
+    <p></p>
+
+
+    <h4>Specific tasks that your scene editor should implement</h4>
+
+    <p>Your scene editor needs to implement all the functionalities described in the
+        <span class="important">items <b>A</b> to <b>I</b> below</span>.
+
+    </p>
+    <p>Don't panic if the videos provided alongside the
+    items seem beyond what you have done in the labs. The project tasks
+        have been chosen to cover all the relevant concepts without requiring you
+        to implement too much extra. Thus, much of the functionalities are already
+        implemented in the skeleton code, and some of the tasks require similar
+        code to what is in the skeleton code.</p>
+
+    <p>Also, you are allowed to improve upon the specification and
+        implement some items differently, but you should explain in your report
+        why it is an improvement.</p>
+
+  
+
+    <ol style="list-style-type:upper-alpha">
+        <li> <!-- <h3 class="underline">Overview and videos of functionality</h3> -->
+			<h4><u> Panning camera </u> </h4>
+
+            The skeleton code draws the ground, and a sphere
+            showing the position of a single point light source; however, it has the
+            default panning camera always facing the same way. You can move it forwards and backwards
+            using the scroll wheel, via the <code>PanningCamera</code>'s <code>distance</code>
+            variable, but there's no way to move it otherwise. You should fix this problem in the code.
+
+            The variables <code>pitch</code> and <code>yaw</code>
+            are already set appropriately when moving the mouse with the
+            right button down.
+            The <code>focus_point</code> variable is set appropriately when dragging with middle mouse.
+            Modify the <code>PanningCamera</code>'s <code>update</code> function so that the camera
+            rotates around the <code>focus_point</code> according to these variables, in the
+            same way as the sample solution shown in the video.            <br>
+            The icon in the bottom left show what mouse button(s) is/are currently down.
+          
+  <br><br>
+            Do not panic when your cursor disappears while dragging it, that is intentional to allow you to drag
+            infinitely without hitting the edge of your monitor. That has been disabled for the following video,
+            so you can see the direction I am moving the cursor.
+            <br><br>
+
+            <table style="width:100%">
+                <tbody>
+                <tr>
+                    <td>
+                         <video width="650" height="350" controls>
+    		<source src="media/task_panning_camera.webm" type="video/webm">
+    		<source src="media/task_panning_camera.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video>
+      
+                    </td>
+                </tr>
+                <tr>
+				
+
+                    <td>Your <code>PanningCamera</code> should do the following:
+                        <ul>
+<p> </p>
+                            <li> The camera should start with the same orientation as at the start of the video.
+                                The camera can also be reset to this orientation by pressing the R key.
+                            </li>
+
+                            <li> When the right mouse button is held down and dragged horizontally
+                                across the window, it should rotate the scene about the axis that is
+                                vertical to the ground plane.
+                            </li>
+
+                            <li> Dragging the right mouse button vertically up (or down) across
+                                the window should change the elevation angle of the camera looking at
+                                the ground plane. Correspondingly, this tilts the entire scene up (or
+                                down).
+                            </li>
+
+                            <li> Dragging the middle mouse button horizontally or vertical should pan the camera.</li>
+
+                            <li> The mouse scroll should move the camera in and out of the
+                                <code>focus_point</code></li>
+                        </ul>
+                </tr>
+                </tbody>
+            </table>
+
+            
+        </li>
+		
+		
+		
+		
+        <li> <!-- <h3 class="underline">Overview and videos of functionality</h3> -->
+
+            <h4><u> Entity rotation </u> </h4>
+		
+
+			Similarly, changing the location and scale of scene elements is already implemented,
+            via the <code>position</code> and <code>scale</code> fields of the <code>LocalTransformComponent</code> class.
+            However, the <code>euler_rotation</code> field in this class does not affect what's drawn, even
+            though it is appropriately set to contain the rotations around the X, Y and Z
+            axes, in radians. Modify the components <code>calc_model_matrix</code> method so that
+            scene elements using this component (EntityElement, EmissiveEntityElement & AnimatedEntityElement)
+            are appropriately rotated when drawn, like as shown in the sample solution.
+            <br>
+			<p> </p>
+			<table>
+                <tbody>
+                <tr>
+                    <td>
+		<video width="650" height="350" controls>
+    		<source src="media/task_entity rotation.webm" type="video/webm">
+    		<source src="media/task_entity rotation.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video>
+
+                       
+                    </td>
+                </tr>
+                <tr>
+                    <td>As shown in the video, your scene editor should behave as follows. When the camera yaw is set to 0, the world axes should align with the standard directions of OpenGL NDC (Normalized Device Coordinates).
+<p> </p>
+                        <ul>
+                            <li>Increasing the x angle should rotate the object about the x-axis
+                                (parallel to the ground plane and pointing to the right)
+                            </li>
+
+                            <li>Increasing the y angle should rotate the object about the y-axis
+                                (vertical to the ground plane and pointing up).
+                            </li>
+
+                            <li>Increasing the z angle should rotate the object about the z-axis
+                                (parallel to the ground plane and pointing to the out of the screen).
+                            </li>
+
+                            <li>The order of composition of these angles will give different results,
+                                so just do something sensible.
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </li>
+		
+		<li> <!-- <h3 class="underline">Overview and videos of functionality</h3> -->
+		 <h4><u> Clipping plane </u> </h4>
+
+            In the skeleton code, triangles are "clipped" (not displayed) if they are even
+            slightly close to the camera. Fix the <code>update</code> function of the <code>PanningCamera</code> and
+            <code>FlyingCamera</code> so that the cameras can give more "close up" views of objects.<br>
+            The relevant properties are already exposed to the UI, just not being used.
+            <br><br>
+			
+			 <table>
+                <tbody>
+                <tr>
+                    <td>
+                       
+		<video width="650" height="350" controls>
+    		<source src="media/task_clip_before.webm" type="video/webm">
+    		<source src="media/task_clip_before.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video>
+
+
+
+                    </td>
+                </tr>
+				</tbody>
+            </table>
+
+			<table>
+                <tbody>
+                <tr>
+                    <td>
+                      <video width="650" height="350" controls>
+    		<source src="media/task_clip_after.webm" type="video/webm">
+    		<source src="media/task_clip_after.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video> 
+
+                    </td>
+                </tr>
+				</tbody>
+            </table>
+
+        </li>
+		
+		 <li> <!-- <h3 class="underline">Overview and videos of functionality</h3> -->
+		<h4><u> Material properties </u> </h4>
+
+            Implement some new UI controls for adjusting the ambient, diffuse, emissive and
+            specular tints (where appropriate), as well as the amount of shininess of <code>EntityElement</code>,
+            <code>EmissiveEntityElement</code> and <code>AnimatedEntityElement</code>.
+            Recall that the shine value (shininess) can be adjusted up to at least 100 to support highly reflective materials. Modify
+            the material UI functions.
+            The code to use these (new UI controls) to affect the shading via the calculation for the light is already implemented in the skeleton code provided.
+
+            <p>
+                Follow the corresponding implementations of other similar UI controls (hint: Look at <code>PointLightElement</code>),
+                and pay attention to how the alpha channel is used, as it's not actually used as alpha.
+            </p>
+            
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                      
+  			 <video width="650" height="350" controls>
+    		<source src="media/task_material_properties.webm" type="video/webm">
+    		<source src="media/task_material_properties.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video> 
+         
+		 </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        The sample video shows this in action for <code>EntityElement</code>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+         
+        </li>
+		
+        <li>
+		<h4><u> Texture scaling </u> </h4>
+            Implement the ability to scale the textures used by <code>EntityElement</code> and <code>AnimatedEntityElement</code>,
+            and add the ability to change these scales in the UI. (You can optionally also add this for <code>EmissiveEntityElement</code>)
+            <br>
+            This can be a single scale for both diffuse and specular or separate scales, and can be a single uniform scale or per axis.
+            <br>
+            Either way, care must be taken to also make sure the new field(s) is(/are) saved and loaded correctly,
+            you can just mirror how this is done for the other fields.
+            <br>
+            <br>
+            Hint: Look at how the other material properties (e.g., shininess) are implemented. You won't need to repeat much code between the two scene element types.
+            Just like how there was no need to repeat code for part B.
+            Also I'd suggest using default values for the scale so that you don't need to update all the structs.
+            <br>
+            <br>
+			
+			
+         <table>
+                <tbody>
+                <tr>
+                    <td>
+                         <video width="650" height="350" controls>
+    		<source src="media/task_texture_scaling.webm" type="video/webm">
+    		<source src="media/task_texture_scaling.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video> 
+
+
+                    </td>
+                </tr>
+				</tbody>
+           </table>
+          
+		  
+            <br>
+            And a video showing the save and loading.
+            <br><br>
+			
+			
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <video width="650" height="350" controls>
+    		<source src="media/task_texture_scaling-save_load.webm" type="video/webm">
+    		<source src="media/task_texture_scaling-save_load.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video> 
+
+                    </td>
+                </tr>
+				</tbody>
+            </table>
+			
+
+        </li>
+       
+        <li> <!-- <h3 class="underline">Overview and videos of functionality</h3> -->
+
+		
+		<h4><u> Light attenuation </u> </h4>
+            Modify the point light calculation in <code>res/shaders/common/lights.glsl</code> so that the light reduces
+            with distance - exactly how it reduces is up to you, but you should aim for the reduction to be noticeable
+            without quickly becoming very dark, similar to the sample solution.
+            <br>
+            <br>
+            Remember you can use "Reload Shader Files" under the "Shader Options" menu to test your shader changes
+            without needing to restart the program.
+            <br>
+            <br>
+
+          <table>
+                <tbody>
+                <tr>
+                    <td>
+                        
+ 		<video width="650" height="350" controls>
+    		<source src="media/task_light_attenuation.webm" type="video/webm">
+    		<source src="media/task_light_attenuation.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video> 
+
+
+
+                    </td>
+                </tr>
+				</tbody>
+            </table>
+
+            <br>
+            <br>
+            CHALLENGE: If you want a challenge, then try to parameterize the "attenuation" of the point light,
+            and upload those parameter(s) to the shader via uniforms. Add a UI control to edit these parameter(s).
+            Make sure that these parameter(s) are correctly saved and loaded when saving and loading the scene.
+            Hint: Look at how the light’s color is currently handled as this will give you a blueprint for how to handle this task. Attempting this challenge can result in a bonus(+2) mark.
+     
+
+        </li>
+        <li> <h4><u> Shading </u> </h4>
+		Move the light calculations from the vertex shader to the fragment shader, so that the
+            directions are calculated for individual fragments rather than for the
+            vertices. This needs to be done for both <code>entity</code> and <code>animated_entity</code>
+            (but NOT <code>emissive_entity</code> since it isn't lit).
+            This should have a very noticeable effect on the way the light
+            interacts with the ground (especially when the ground has a plain texture
+            map), since the ground only has vertices at the corners of a coarse grid.
+            Also don't forget to change the <code>set_vert_define</code> calls with <code>set_frag_define</code> calls,
+            otherwise NUM_PL would not be defined in the right shaders.
+
+            <br> <br>
+			 
+			<table>
+                <tbody>
+                <tr>
+                    <td>
+                         <video width="650" height="350" controls>
+    		<source src="media/task_shading.webm" type="video/webm">
+    		<source src="media/task_shading.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video> 
+
+                    </td>
+                </tr>
+				</tbody>
+            </table>
+			
+		
+
+        </li>
+
+        <li> <!-- <h3 class="underline">Overview and videos of functionality</h3> -->
+		<h4><u> Light source </u> </h4>
+
+            Add a second light type to both the C++ code and the shaders. The second light
+            should be <b>directional</b>, i.e., the direction that the light hits each
+            surface is constant and independent of the position of the surface. In
+            particular, using direction vector in the shader to describe the light direction,
+            which will be easier than trying to use angles like pitch and yaw in the shader (though it is possible).
+            <br><br>
+            The lights' colour, direction, etc., should be editable from the UI, and a similar approach
+            should be used as for point lights to support multiple directional lights.
+            <br><br>
+			Also, it would be beneficial to have an in-world entity (like how point light adds a sphere) that visually indicates the direction of the directional light source. 
+           The specific implementation of this is open to interpretation and creativity.
+            <br><br>
+            Also make sure that this light is saved and loaded correctly when saving and loading the scene.
+            <br><br>
+            This is somewhat of a big task, so look at <code>Lights.h</code>, <code>Lights.cpp</code>, <code>MasterRenderScene</code>,
+            <code>PointLightElement</code>, <code>lights.glsl</code>, the fragment shaders of both <code>entity</code>
+            and <code>animated_entity</code>, both <code>EntityRenderer</code> and <code>AnimatedEntityRenderer</code>
+            and <code>EditorScene</code>
+            and probably some other places to see how the point light is handled and basically repeat all that for the
+            directional light.
+
+            <br><br>
+         
+			<table>
+                <tbody>
+                <tr>
+                    <td>
+                       
+		<video width="650" height="350" controls>
+    		<source src="media/task_directional_light_source.webm" type="video/webm">
+    		<source src="media/task_directional_light_source.mp4" type="video/mp4">
+   		 Your browser does not support the video tag.
+		</video> 
+
+                    </td>
+                </tr>
+				</tbody>
+            </table>
+
+   
+
+        </li>
+
+        <li> <!-- <h3 class="underline">Overview and videos of functionality</h3> -->
+
+            <h4><u> New feature </u> </h4>
+			Implement a new feature for the scene editor that showcases your creativity and enhances the overall
+            functionality of the editor.
+            How can you make it more interesting and unique? Consider incorporating any newly acquired skills or
+            knowledge from this unit or your personal research outside of class.
+            In your report, provide a clear explanation of the inspiration behind your idea and how it will add value to
+            the scene editor.
+            While there are no restrictions on your creativity, ensure that you justify the rationale behind this
+            distinctive feature.
+
+        </li>
+
+</ol>
+        <h3>Assessment Details</h3>
+        <p>Your project will be worth a total of 70 marks and will be evaluated based on the following factors:
+		<ul>
+			<li>Correctness of functionalities and coding: Your project will be evaluated based on the correctness of the functionalities and coding, including the structure, clarity, and appropriate use of OpenGL. This section of the assessment is worth 22 marks.</li>
+
+			<li>Understanding reflected during the demonstration: Your ability to demonstrate a deep understanding of the project will also be assessed during the demonstration. This section of the assessment is worth 40 marks.</li>
+
+			<li>Project report will be evaluated based on its clarity and thoroughness. This section of the assessment is worth 5 marks.</li>
+
+			<li>Demo video for Part-I: Finally, the short video for the new feature is there to showcase your creativity and is worth 3 marks.</li>
+
+<p><strong>Mark Distribution:</strong></p>
+<ul>
+    <li>Tasks A–G: 7 tasks × 6 marks = <strong>42 marks</strong></li>
+    <li>Task H&I (relatively difficult tasks): 8 marks + 12 marks = <strong>18 marks</strong></li>
+    <li>Project Report = <strong>5 marks</strong></li>
+    <li>Task-I Demo Video = <strong>3 marks</strong></li>
+</ul>
+
+        </ul>
+		<p>It is important to note that partial marks are possible for partially correct solutions.
+		</p>
+
+
+
+<p><em>Note:</em> Failing to appear for the demo will result in forfeiture of marks for the demonstration and Task I. In such cases, only the project report (if submitted) will be considered for marking, with a maximum of <strong>5 marks</strong> awarded.</p>
+
+
+
+        <h4>Originality and Academic Honesty</h4>
+        <p>You may discuss with other students the general principles required to understand this project, but the work
+            you submit as a group must be the sole effort of the group members.
+            You are allowed to base parts of your code on the lab sample solutions, as well as the examples from
+            lectures and the recommended text.
+            If you base your code on code from any other source, you must clearly reference the origin in a comment.
+            Your comment should also mention exactly which parts of your code are based on the code from that origin. It
+            will be considered academic dishonesty if you omit any such references.
+        </p>
+  
+
+
+
+<hr> 
+<h6>Acknowlegments</h6
+>
+	We gratefully acknowledge the contributions of current and past members of the CITS3003 teaching team, whose work has contributed to the project codebase and documentation.
+
+			
+	  </section>
+    </main>
+
+    <footer>
+              <div align="right"><small><b><a href="#top">BACK TO TOP</a></b></small></div>
+</div>
+    </footer>
+
+    <script>
+        // Add JavaScript here
+    </script>
+
+
+</body>
+
+
+
+
+</html>

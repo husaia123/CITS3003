@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>BaseLitEntityShader.cpp</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link" href="../Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link" href="FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link" href="FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link" href="PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link" href="PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link active" href="BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link" href="Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link" href="Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link" href="vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link" href="frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>BaseLitEntityShader.cpp</h1>
+<br>
+<h3>Location in Project</h3>
+<p>src/rendering/renders/shaders/BaseLitEntityShader.cpp</p>
+<br>
+<h3>Functionality and Purpose of this File</h3>
+<p>This file's functionality is an extension of <code><a href="FileSummaries.html#BaseEntityShader.cpp">BaseEntityShader.cpp</a></code> and includes a variety of functions that get and send light- and material-related information to the shaders.</p>
+<br>
+<h2>Method Documentation</h2>
+<br>
+<div id="Constructor">
+    <h3><code>BaseLitEntityShader::BaseLitEntityShader(std::string name, const std::string& vertex_path, const std::string& fragment_path, std::unordered_map&#60;std::string, std::string> vert_defines, std::unordered_map&#60;std::string, std::string> frag_defines)</code></h3>
+    <p>This is the constructor for the base lit entity shader.</p>
+    <h4>Parameters</h4>
+    <p><code>std::string name</code>: The name of the entity which the base lit entity shader is being initialized for, such as "Entity" or "Animated Entity".</p>
+    <p><code>const std::string& vertex_path</code>: The path to the entity's vertex shader.</p>
+    <p><code>const std::string& fragment_path</code>: The path to the entity's fragment shader.</p>
+    <p><code>std::unordered_map&#60;std::string, std::string> vert_defines</code>: An unordered map containing key-value pairs applied to the vertex shader via #define key value.</p>
+    <p><code>std::unordered_map&#60;std::string, std::string> frag_defines</code>: An unordered map containing key-value pairs applied to the fragment shader via #define key value.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the constructor methods of both <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code> and <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="GetUniformsSetBindings">
+    <h3><code>void BaseLitEntityShader::get_uniforms_set_bindings()</code></h3>
+    <p>This function gets the uniform location and sets the binding of various light- and material-related uniforms used in the shaders.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the constructor method for this file, and it is called in the <code>get_uniforms_set_bindings</code> functions of both <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code> and <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code>.</p>
+    <h4>Remarks</h4>
+    <p>Note that <code>POINT_LIGHT_BINDING</code> is declared in <code><a href="FileSummaries.html#BaseLitEntityShader.h">BaseLitEntityShader.h</a></code>, and must have a unique value to other light bindings declared there. To understand why, look at the <code>set_block_binding</code> function in <code><a href="FileSummaries.html#ShaderInterface.cpp">ShaderInterface.cpp</a></code> and refer to the documentation <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glUniformBlockBinding.xhtml" target="_blank">here</a>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="SetInstanceData">
+    <h3><code>void BaseLitEntityShader::set_instance_data(const BaseLitEntityInstanceData& instance_data)</code></h3>
+    <p>This function takes the instance data of a given entity and passes the information to the shaders via uniforms.</p>
+    <h4>Parameters</h4>
+    <p><code>const BaseLitEntityInstanceData& instance_data</code>: A struct defined in <code><a href="FileSummaries.html#BaseLitEntityShader.h">BaseLitEntityShader.h</a></code> that holds information on a given entity's model matrix and material.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the <code>render</code> functions of both <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code> and <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code>, as well as the <code>set_instance_data</code> function of <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="SetPointLights">
+    <h3><code>void BaseLitEntityShader::set_point_lights(const std::vector&#60;PointLight>& point_lights)</code></h3>
+    <p>This function takes a vector of point lights and populates the point lights uniform buffer object with their position and colour before binding and uploading the buffer object, to be used in the shaders.</p>
+    <h4>Parameters</h4>
+    <p><code>const std::vector&#60;PointLight>& point_lights</code>: A vector containing the nearest point lights up to a maximum of <code>MAX_PL</code> lights, where <code>MAX_PL</code> is defined in <code><a href="FileSummaries.html#BaseLitEntityShader.h">BaseLitEntityShader.h</a></code>.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the <code>render</code> functions of both <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code> and <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code>.</p>
+    <h4>Remarks</h4>
+    <p>To understand what <code>point_lights_ubo.bind(POINT_LIGHT_BINDING)</code> and <code>point_lights_ubo.upload()</code> are doing, I suggest you look through <code><a href="FileSummaries.html#UniformBufferArray.h">UniformBufferArray.h</a></code> and read the documentation <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/glBindBufferBase.xhtml" target="_blank">here</a> </p>
+	<p>Additionally, this is the only location in the project where we use <code>set_vert_define</code>. This will have to be changed to <code>set_frag_define</code> when you are implementing per-fragment shading.</p>
+</div>
+</body>
+</html>

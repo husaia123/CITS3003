@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>PanningCamera.cpp</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link" href="../Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link" href="FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link" href="FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link active" href="PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link" href="PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link" href="BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link" href="Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link" href="Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link" href="vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link" href="frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>PanningCamera.cpp</h1>
+<br>
+<h3>Location in Project</h3>
+<p>src/rendering/cameras/PanningCamera.cpp</p>
+<br>
+<h3>Functionality and Purpose of this File</h3>
+<p>This file contains all of the functions associated with the panning camera. This includes the constructors, update function, reset function, ImGui elements, save and load functions, and various accessor functions.</p>
+<br>
+<h2>Method Documentation</h2>
+<br>
+<div id="DefaultConstructor">
+    <h3><code>PanningCamera::PanningCamera()</code></h3>
+    <p>This is the default constructor for the panning camera. It initialises <code>distance</code>, <code>focus_point</code>, <code>pitch</code>, <code>yaw</code>, <code>near</code>, and <code>fov</code> to the corresponding <code>init_</code> values defined in <code><a href="FileSummaries.html#PanningCamera.h">PanningCamera.h</a></code>.</p>
+    <h4>Where is this called?</h4>
+    <p>In the base project provided, this constructor is not used anywhere.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="SpecifiedConstructor">
+    <h3><code>PanningCamera::PanningCamera(float distance, glm::vec3 focus_point, float pitch, float yaw, float near, float fov)</code></h3>
+    <p>This is the constructor used in the base project, which sets the panning camera's initial state and reset state to the specified values.</p>
+    <h4>Where is this called?</h4>
+    <p>This is used in both the <code>open</code> and <code>set_camera_mode</code> functions found in <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code> and <code><a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a></code>. <code>open</code> is called whenever we switch to a scene and is responsible for setting up all the default elements of the scene. <code>set_camera_mode</code> is called whenever we are swapping the camera mode between panning and flying.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="Update">
+    <h3><code>void PanningCamera::update(const Window& window, float dt, bool controls_enabled)</code></h3>
+    <p>This function contains the camera logic that is performed every frame. This calculates changes to the camera's focus point, pitch, yaw, and distance based on the movemement of the mouse and what mouse buttons are being pressed. It also re-calculates the view matrix and projection matrix based on these values.</p>
+    <h4>Parameters</h4>
+    <p><code>const Window& window</code>: The window created upon launching the project.</p>
+    <p><code>float dt</code>: The time (in seconds) since the last frame was calculated. This value is set via the <code>update</code> function in <code><a href="FileSummaries.html#WindowManager.cpp">WindowManager.cpp</a></code>, which is called every frame inside the main render loop of <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code>.</p>
+    <p><code>bool controls_enabled</code>: If true, the user can use mouse movement and button presses to change the characteristics of the panning camera, otherwise they are not able to.</p>
+    <h4>Where is this called?</h4>
+    <p>This function is called inside the <code>tick_scene</code> function of <code><a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a></code>, which is in turn called inside the main render loop of <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="Reset">
+    <h3><code>void PanningCamera::reset()</code></h3>
+    <p>This function sets the panning camera's distance, focus point, pitch, yaw, fov, near, and gamma values to the initial values, which were set when the camera was constructed.</p>
+    <h4>Remarks</h4>
+    <p>You may notice that resetting the panning camera resets it to values that are different to those defined in <code><a href="FileSummaries.html#PanningCamera.h">PanningCamera.h</a></code>. This is because the initial values used are actually those defined in <code><a href="FileSummaries.html#EditorScene.h">EditorScene.h</a></code> or <code><a href="FileSummaries.html#BasicStaticScene.h">BasicStaticScene.h</a></code>, depending on what scene option you are currently using (the default interactive scene is the Editor Scene). To understand the reason for this behaviour, look at the <code>set_camera_mode</code> function in either <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code> or <code><a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a></code> and you will see that we construct the panning and flying cameras using the <code>init_</code> values defined in the corresponding header file, instead of those defined in <code><a href="FileSummaries.html#PanningCamera.h">PanningCamera.h</a></code> or <code><a href="FileSummaries.html#FlyingCamera.h">FlyingCamera.h</a></code>.</p>
+    <h4>Where is this called?</h4>
+    <p>This is only called in the <code><a href="#Update">update</a></code> and <code><a href="#AddImGui">add_imgui_options_section</a></code> functions in <code>PanningCamera.cpp</code>, when the 'r' key is pressed and when the 'Reset (R)' ImGui button is clicked, respectively.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="AddImGui">
+    <h3><code>void PanningCamera::add_imgui_options_section(const SceneContext& scene_context)</code></h3>
+    <p>This function adds the ImGui elements that allow the user to interact with the panning camera's properties via the UI. It is called every frame and allows the user to modify the camera's focus point, distance, pitch, yaw, near plane, fov, and gamma, and also allows the user to reset the camera to it's initial state when it was constructed.</p>
+    <h4>Parameters</h4>
+    <p><code>const SceneContext& scene_context</code>: An object (defined in <code><a href="FileSummaries.html#SceneContext.h">SceneContext.h</a></code> and created in <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code>) that holds information on the window, window manager, model loader, texture loader, and a bool that indicates if ImGui elements are enabled.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called inside <code>add_imgui_options_section</code> in <code><a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a></code>, which is in turn called inside the main render loop of <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="SaveProperties">
+    <h3><code>CameraProperties PanningCamera::save_properties()</code></h3>
+    <p>This function returns a CameraProperties struct that consists of the panning camera's position (pulled from the inverse view matrix, look at <code><a href="FileSummaries.html#CameraInterface.h">CameraInterface.h</a></code> to see what <code>get_position</code> does), yaw, pitch, fov, and gamma.</p>
+    <h4>Returns</h4>
+    <p><code>CameraProperties</code>: A struct defined in <code><a href="FileSummaries.html#CameraInterface.h">CameraInterface.h</a></code>, this holds properties common to both the flying and panning camera to allow easier swapping between them.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the <code>set_camera_mode</code> functions in both <code><a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a></code> and <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code>. In that function, <code>save_properties</code> is used to get the current properties of the panning camera, which are stored and used later as an input for <code><a href="#LoadProperties">load_properties</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="LoadProperties">
+    <h3><code>void PanningCamera::load_properties(const CameraProperties& camera_properties)</code></h3>
+    <p>This function takes a set of camera properties (position, pitch, yaw, fov, and gamma) and uses them to set the corresponding values for the panning camera. Some logic is used to convert from a camera position to a focus point and distance.</p>
+    <h4>Parameters</h4>
+    <p><code>const CameraProperties& camera_properties</code>: A struct defined in <code><a href="FileSummaries.html#CameraInterface.h">CameraInterface.h</a></code>, this holds properties common to both the flying and panning camera.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the <code>set_camera_mode</code> functions in both <code><a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a></code> and <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code>. In that function, <code>load_properties</code> is used to set the properties of the new camera once it has been constructed. The values used for each property are those returned by <code><a href="#SaveProperties">save_properties</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="AccessorMethods">
+    <h3>Various Accessor Methods</h3>
+    <p>These are used to get specific information from the panning camera.</p>
+    <h4>Where are these called?</h4>
+    <p><code>get_view_matrix</code>, <code>get_projection_matrix</code>, and <code>get_gamma</code> are all used inside <code>use_camera</code> in <code><a href="FileSummaries.html#BaseEntityShader.h">BaseEntityShader.h</a></code>. <code>get_inverse_view_matrix</code> is used inside <code>get_position</code> in <code><a href="FileSummaries.html#CameraInterface.h">CameraInterface.h</a></code>, and <code>get_inverse_projection_matrix</code> is not used anywhere in the base project.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Lights.h</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link" href="../Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link" href="FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link" href="FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link" href="PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link" href="PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link" href="BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link active" href="Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link" href="Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link" href="vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link" href="frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>Lights.h</h1>
+<br>
+<h3>Location in Project</h3>
+<p>src/rendering/scene/Lights.h</p>
+<br>
+<h3>Functionality and Purpose of this File</h3>
+<p>In this file two structs are declared: <code>PointLight</code> and <code>LightScene</code>. The <code>PointLight</code> struct is a representation of a point light scene element, and the <code>LightScene</code> struct contains a set with all point lights and a helper function to get the nearest point lights up to a specified <code>max_count</code>.</p>
+<br>
+<h2>Contents Documentation</h2>
+<br>
+<div id="PointLight">
+    <h3><code>struct PointLight</code></h3>
+    <p>This struct includes the declaration for what parameters we must provide when creating a new point light element, which are the two attributes each point light has - position (a <code>glm::vec3</code>) and colour (a <code>glm::vec4</code>), also declared as member variables in the struct. It also includes a <code>Data</code> struct which is relevant for the <code>point_lights_ubo</code> declaration in <code><a href="FileSummaries.html#BaseLitEntityShader.h">BaseLitEntityShader.h</a></code> and by extension the <code>set_point_lights</code> method in <code><a href="BaseLitEntityShader.cpp.html">BaseLitEntityShader.cpp</a></code>.</p>
+    <h4>Remarks</h4>
+    <p>You will notice that the colour attribute inside the <code>PointLight</code> struct is a <code>glm::vec4</code>, but in the <code>Data</code> struct it is a <code>glm::vec3</code>. This is because the 4th element of the point light's colour is used to store a scalar that is applied to the other colour values before it is assigned to the <code>point_lights_ubo</code>. I suggest you look through <code>set_point_lights</code> in <code><a href="BaseLitEntityShader.cpp.html">BaseLitEntityShader.cpp</a></code> to see exactly what is going on.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="LightScene">
+    <h3><code>struct LightScene</code></h3>
+    <p>This struct includes the declaration for an unordered set <code>point_lights</code> as well as a function <code><a href="Lights.cpp.html#GetNearestPointLights">get_nearest_point_lights</a></code>. New point lights are added to and removed from the unordered set via <code>insert_light</code> and <code>remove_light</code> in <code><a href="FileSummaries.html#MasterRenderScene.cpp">MasterRenderScene.cpp</a></code>. Functionally, this set is primarily used in <code><a href="Lights.cpp.html#GetNearestPointLights">get_nearest_point_lights</a></code>, which is defined in <code><a href="Lights.cpp.html">Lights.cpp</a></code>.</p>
+    <h4>Remarks</h4>
+    <p><code><a href="Lights.cpp.html#GetNearestPointLights">get_nearest_point_lights</a></code> is called in two places of the code - the <code>render</code> function in <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code> and the <code>render</code> function in <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code>.</p>
+</div>
+</body>
+</html>

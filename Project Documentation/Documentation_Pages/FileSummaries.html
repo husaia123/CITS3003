@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Project File Summaries</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link" href="../Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link active" href="FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link" href="FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link" href="PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link" href="PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link" href="BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link" href="Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link" href="Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link" href="vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link" href="frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>Project File Summaries</h1>
+<br>
+<h2 id="contents">Contents</h2>
+<ul>
+    <li><a href=#lowest_level                   >(Lowest level of project directory)</a></li>
+    <li><a href=#res_shaders_animated           >res/shaders/animated_entity</a></li>
+    <li><a href=#res_shaders_common             >res/shaders/common</a></li>
+    <li><a href=#res_shaders_emissive           >res/shaders/emissive_entity</a></li>
+    <li><a href=#res_shaders_entity             >res/shaders/entity</a></li>
+    <li><a href=#src                            >src</a></li>
+    <li><a href=#src_rendering_cameras          >src/rendering/cameras</a></li>
+    <li><a href=#src_rendering_imgui            >src/rendering/imgui</a></li>
+    <li><a href=#src_rendering_memory           >src/rendering/memory</a></li>
+    <li><a href=#src_rendering_renders          >src/rendering/renders</a></li>
+    <li><a href=#src_rendering_renders_shaders  >src/rendering/renders/shaders</a></li>
+    <li><a href=#src_rendering_resources        >src/rendering/resources</a></li>
+    <li><a href=#src_rendering_scene            >src/rendering/scene</a></li>
+    <li><a href=#src_scene                      >src/scene</a></li>
+    <li><a href=#src_scene_editor_scene         >src/scene/editor_scene</a></li>
+    <li><a href=#src_system_interfaces          >src/system_interfaces</a></li>
+    <li><a href=#src_utility                    >src/utility</a></li>
+</ul>
+<br>
+<br>
+
+<h2 id="lowest_level">(Lowest level of project directory)</h2>
+<div id ="CMakeLists.txt">
+    <h3>CMakeLists.txt</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file is used by the cmake script which builds the project. You will notice a long list of files below the line <code>add_executable(cits3003_project</code>, if you add any new source code files to the project you must also add them to this list to ensure they are built and used in the project.</p>
+</div>
+<br>
+<br>
+
+<h2 id="res_shaders_animated">res/shaders/animated_entity</h2>
+<div id ="animated_frag.glsl">
+    <h3>frag.glsl</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file is the fragment shader used to render animated entities.</p>
+</div>
+<br>
+<div id ="animated_vert.glsl">
+    <h3>vert.glsl</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file is the vertex shader used to render animated entities.</p>
+</div>
+<br>
+<br>
+
+<h2 id="res_shaders_common">res/shaders/common</h2>
+<div id ="lights.glsl">
+    <h3>lights.glsl</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file holds functionality that is common across the normal entity and animated entity vertex and fragment shaders. This primarily includes light-related calculations.</p>
+</div>
+<br>
+<div id ="maths.glsl">
+    <h3>maths.glsl</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the <code>cofactor</code> function used in the animated entity's vertex shader.</p>
+</div>
+<br>
+<br>
+
+<h2 id="res_shaders_emissive">res/shaders/emissive_entity</h2>
+<div id ="emissive_frag.glsl">
+    <h3>frag.glsl</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file is the fragment shader used to render emissive entities.</p>
+</div>
+<br>
+<div id ="emissive_vert.glsl">
+    <h3>vert.glsl</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file is the vertex shader used to render emissive entities.</p>
+</div>
+<br>
+<br>
+
+<h2 id="res_shaders_entity">res/shaders/entity</h2>
+<div id ="entity_frag.glsl">
+    <h3>frag.glsl</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file is the fragment shader used to render normal entities.</p>
+</div>
+<br>
+<div id ="emissive_vert.glsl">
+    <h3>vert.glsl</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file is the vertex shader used to render normal entities.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src">src</h2>
+<div id ="main.cpp">
+    <h3>main.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file can be broken down into three separate sections - before, inside, and after the main render loop. Before the main render loop a variety of important objects of different classes are initialized, effectively setting up the project. Inside the main render loop every iteration renders a frame (an overview of how this is done can be found <a href="FunctionHierarchy.html">here</a>), and this will run until the project is closed. After the main render loop, cleanup is performed and any objects previously created are destroyed.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_rendering_cameras">src/rendering/cameras</h2>
+<div id ="CameraInterface.h">
+    <h3>CameraInterface.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines a common interface that each camera must implement. The <code>CameraProperties</code> struct is defined here.</p>
+</div>
+<br>
+<div id ="FlyingCamera.cpp">
+    <h3>FlyingCamera.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains all of the functions associated with the flying camera. This includes the constructors, update function, reset function, ImGui elements, save and load functions, and various accessor functions.</p>
+</div>
+<br>
+<div id ="FlyingCamera.h">
+    <h3>FlyingCamera.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FlyingCamera.cpp.html">FlyingCamera.cpp</a></code>, which implements the interface defined in <code><a href="FileSummaries.html#CameraInterface.h">CameraInterface.h</a></code> and declares variables and functions that produce a camera with basic flight controls.</p>
+</div>
+<br>
+<div id ="PanningCamera.cpp">
+    <h3>PanningCamera.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains all of the functions associated with the panning camera. This includes the constructors, update function, reset function, ImGui elements, save and load functions, and various accessor functions.</p>
+</div>
+<br>
+<div id ="PanningCamera.h">
+    <h3>PanningCamera.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="PanningCamera.cpp.html">PanningCamera.cpp</a></code>, which implements the interface defined in <code><a href="FileSummaries.html#CameraInterface.h">CameraInterface.h</a></code> and declares variables and functions that produce a camera with basic panning controls.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_rendering_imgui">src/rendering/imgui</h2>
+<div id ="ImGuiImpl.cpp">
+    <h3>ImGuiImpl.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the implementation of many low-level ImGui functions.</p>
+</div>
+<br>
+<div id ="ImGuiImpl.h">
+    <h3>ImGuiImpl.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#ImGuiImpl.cpp">ImGuiImpl.cpp</a></code>, which contains various <code>#include</code> and <code>#define</code> directives.</p>
+</div>
+<br>
+<div id ="ImGuiManager.cpp">
+    <h3>ImGuiManager.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file implements the helper class <code>ImGuiManager</code>, used in <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code> and <code><a href="FileSummaries.html#Window.cpp">Window.cpp</a></code>. It includes useful functions such as <code>ImGui::DragDisableCursor</code>, <code>ImGui::HelpMarker</code>, and <code>ImGui::InputText</code>.</p>
+</div>
+<br>
+<div id ="ImGuiManager.h">
+    <h3>ImGuiManager.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#ImGuiManager.cpp">ImGuiManager.cpp</a></code>, this file declares the functions that belong to the helper class <code>ImGuiManager</code>.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_rendering_memory">src/rendering/memory</h2>
+<div id ="UniformBufferArray.h">
+    <h3>UniformBufferArray.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the helper class <code>UniformBufferArray</code>, used in <code><a href="FileSummaries.html#BaseLitEntityShader.h">BaseLitEntityShader.h</a></code> and <code><a href="BaseLitEntityShader.cpp.html">BaseLitEntityShader.cpp</a></code>. The <code>upload</code> and <code>bind</code> functions are used to pass point light information to the shaders.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_rendering_renders">src/rendering/renders</h2>
+<div id ="AnimatedEntityRenderer.cpp">
+    <h3>AnimatedEntityRenderer.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with rendering the animated entities in a scene.</p>
+</div>
+<br>
+<div id ="AnimatedEntityRenderer.h">
+    <h3>AnimatedEntityRenderer.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code>, this file declares the classes, functions, and structs associated with rendering animated entities.</p>
+</div>
+<br>
+<div id ="EmissiveEntityRenderer.cpp">
+    <h3>EmissiveEntityRenderer.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with rendering the emissive entities in a scene.</p>
+</div>
+<br>
+<div id ="EmissiveEntityRenderer.h">
+    <h3>EmissiveEntityRenderer.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#EmissiveEntityRenderer.cpp">EmissiveEntityRenderer.cpp</a></code>, this file declares the classes, functions, and structs associated with rendering emissive entities.</p>
+</div>
+<br>
+<div id ="EntityRenderer.cpp">
+    <h3>EntityRenderer.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with rendering the normal entities in a scene.</p>
+</div>
+<br>
+<div id ="EntityRenderer.h">
+    <h3>EntityRenderer.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code>, this file declares the classes, functions, and structs associated with rendering normal entities.</p>
+</div>
+<br>
+<div id ="MasterRenderer.cpp">
+    <h3>MasterRenderer.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with the master renderer (which controls the other renderers) as well as ImGui elements to interact with the render settings and shader options.</p>
+</div>
+<br>
+<div id ="MasterRenderer.h">
+    <h3>MasterRenderer.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#MasterRenderer.cpp">MasterRenderer.cpp</a></code>, this file declares the <code>RenderSettings</code> struct as well as the functions associated with the master renderer.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_rendering_renders_shaders">src/rendering/renders/shaders</h2>
+<div id ="BaseEntityShader.cpp">
+    <h3>BaseEntityShader.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains entity shading functions used by all entity types, such as <code>set_instance_data</code> and <code>set_global_data</code> which pass the <code>model_matrix</code> and <code>projection_view_matrix</code> of each entity to the shaders.</p>
+</div>
+<br>
+<div id ="BaseEntityShader.h">
+    <h3>BaseEntityShader.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#BaseEntityShader.cpp">BaseEntityShader.cpp</a></code>, this file declares the functions associated with the base entity shader.</p>
+</div>
+<br>
+<div id ="BaseLitEntityShader.cpp">
+    <h3>BaseLitEntityShader.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file's functionality is an extension of <code><a href="FileSummaries.html#BaseEntityShader.cpp">BaseEntityShader.cpp</a></code> and includes a variety of functions that get and send light- and material-related information to the shaders.</p>
+</div>
+<br>
+<div id ="BaseLitEntityShader.h">
+    <h3>BaseLitEntityShader.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="BaseLitEntityShader.cpp.html">BaseLitEntityShader.cpp</a></code>, this file declares the structs, variables, and functions associated with the base lit entity shader. In particular, the <code>BaseLitEntityMaterial</code> struct which holds each lit entity's material properties is declared in this file.</p>
+</div>
+<br>
+<div id ="ShaderInterface.cpp">
+    <h3>ShaderInterface.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with the helper class <code>ShaderInterface</code>, which acts as an interface for the shaders. It is used in <code><a href="FileSummaries.html#BaseEntityShader.cpp">BaseEntityShader.cpp</a></code>, which is in turn used in <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code>, <code><a href="FileSummaries.html#EmissiveEntityRenderer.cpp">EmissiveEntityRenderer.cpp</a></code>, and <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code>.</p>
+</div>
+<br>
+<div id ="ShaderInterface.h">
+    <h3>ShaderInterface.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#ShaderInterface.cpp">ShaderInterface.cpp</a></code>, this file declares the functions associated with the helper class <code>ShaderInterface</code>.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_rendering_resources">src/rendering/resources</h2>
+<div id ="MeshHierarchy.cpp">
+    <h3>MeshHierarchy.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the <code>sample</code> function which is used inside the <code>calculate_animation</code> function of <code><a href="FileSummaries.html#MeshHierarchy.h">MeshHierarchy.h</a></code>, which is used in the process of rendering animated entities.</p>
+</div>
+<br>
+<div id ="MeshHierarchy.h">
+    <h3>MeshHierarchy.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#MeshHierarchy.cpp">MeshHierarchy.cpp</a></code>, this file contains the majority of the functionality associated with mesh hierarchy structs, used to animate animated entities.</p>
+</div>
+<br>
+<div id ="ModelHandle.h">
+    <h3>ModelHandle.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the <code>ModelHandle</code> class which represents a handle to a loaded model and stores some of its configuration data.</p>
+</div>
+<br>
+<div id ="ModelLoader.cpp">
+    <h3>ModelLoader.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the <code>get_available_models</code> function used by several functions in the <code>ModelLoader</code> class.</p>
+</div>
+<br>
+<div id ="ModelLoader.h">
+    <h3>ModelLoader.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#ModelLoader.cpp">ModelLoader.cpp</a></code>, this file contains the majority of the functionality associated with the <code>ModelLoader</code> class, used to load models from disk. Notably, the ImGui elements associated with selecting and changing an entity's model are defined here.</p>
+</div>
+<br>
+<div id ="TextureHandle.cpp">
+    <h3>TextureHandle.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the function definitions of the <code>TextureHandle</code> class, all of which are simple accessor functions.</p>
+</div>
+<br>
+<div id ="TextureHandle.h">
+    <h3>TextureHandle.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#TextureHandle.cpp">TextureHandle.cpp</a></code>, this file defines the <code>TextureHandle</code> class which represents a handle to a loaded texture and stores some of its configuration data.</p>
+</div>
+<br>
+<div id ="TextureLoader.cpp">
+    <h3>TextureLoader.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the function definitions of the <code>TextureLoader</code> class. Notably, the ImGui elements associated with selecting and changing an entity's texture are defined here.</p>
+</div>
+<br>
+<div id ="TextureLoader.h">
+    <h3>TextureLoader.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#TextureLoader.cpp">TextureLoader.cpp</a></code>, this file contains the function declarations associated with the <code>TextureLoader</code> class, used to load textures from disk.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_rendering_scene">src/rendering/scene</h2>
+<div id ="Animator.cpp">
+    <h3>Animator.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the <code>animate</code> function used to control the animation of animated entities.</p>
+</div>
+<br>
+<div id ="Animator.h">
+    <h3>Animator.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#Animator.cpp">Animator.cpp</a></code>, this file declares and defines the <code>AnimationParameters</code> struct as well as a variety of functions used to control the animation of animated entities.</p>
+</div>
+<br>
+<div id ="GlobalData.h">
+    <h3>GlobalData.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file declares the base class for all <code>GlobalData</code> structs which contain camera data, to provide a common interface for applying a camera state. The member variables of the <code>GlobalData</code> struct are most notably used in the <code>set_global_data</code> function of <code><a href="FileSummaries.html#BaseEntityShader.cpp">BaseEntityShader.cpp</a></code>.</p>
+</div>
+<br>
+<div id ="Lights.cpp">
+    <h3>Lights.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>In this file, the functions <code><a href="Lights.cpp.html#GetNearestPointLights">get_nearest_point_lights</a></code> and <code><a href="Lights.cpp.html#GetNearestLights">get_nearest_lights</a></code> are defined. From a high level overview, these functions are used in the <code>render</code> functions of <code><a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a></code> and <code><a href="FileSummaries.html#AnimatedEntityRenderer.cpp">AnimatedEntityRenderer.cpp</a></code>, where they are used to determine the subset of point lights we provide information about to the shaders.</p>
+</div>
+<br>
+<div id ="Lights.h">
+    <h3>Lights.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="Lights.cpp.html">Lights.cpp</a></code>. In this file two structs are declared: <code>PointLight</code> and <code>LightScene</code>. The <code>PointLight</code> struct is a representation of a point light scene element, and the <code>LightScene</code> struct contains a set with all point lights and a helper function to get the nearest point lights up to a specified <code>max_count</code>.</p>
+</div>
+<br>
+<div id ="MasterRenderScene.cpp">
+    <h3>MasterRenderScene.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with the master render scene, which holds a copy of each renderer's render scene, a copy of the light scene, and the animator used to control animation. The master render scene is primarily used as an interface for adding and removing entities and lights.</p>
+</div>
+<br>
+<div id ="MasterRenderScene.h">
+    <h3>MasterRenderScene.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#MasterRenderScene.cpp">MasterRenderScene.cpp</a></code>, this file declares the functions associated with the master render scene.</p>
+</div>
+<br>
+<div id ="RenderedEntity.h">
+    <h3>RenderedEntity.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the <code>RenderedEntity</code> and <code>AnimatedRenderedEntity</code> structs used by the various entity renderers.</p>
+</div>
+<br>
+<div id ="RenderScene.h">
+    <h3>RenderScene.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the <code>RenderScene</code> struct used by the various entity renderers, which holds entity and global data information.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_scene">src/scene</h2>
+<div id ="BasicStaticScene.cpp">
+    <h3>BasicStaticScene.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with the basic static scene, which is a scene with several entities including a rotating box and no user interaction.</p>
+</div>
+<br>
+<div id ="BasicStaticScene.h">
+    <h3>BasicStaticScene.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a></code>, this file declares the member variables and functions associated with the basic static scene.</p>
+</div>
+<br>
+<div id ="EditorScene.cpp">
+    <h3>EditorScene.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with the editor scene, which is an interactive scene that allows the user to add, manipulate, and remove entities and lights. This scene can also be saved and loaded to and from file.</p>
+</div>
+<br>
+<div id ="EditorScene.h">
+    <h3>EditorScene.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code>, this file declares the member variables and functions associated with the editor scene.</p>
+</div>
+<br>
+<div id ="SceneContext.h">
+    <h3>SceneContext.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the definition for the <code>SceneContext</code> struct, used to hold information on the window, window manager, model loader, texture loader, and if ImGui elements are enabled.</p>
+</div>
+<br>
+<div id ="SceneInterface.h">
+    <h3>SceneInterface.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the <code>SceneInterface</code> class with pure virtual functions that both the basic static scene and editor scene must implement.</p>
+</div>
+<br>
+<div id ="SceneManager.cpp">
+    <h3>SceneManager.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with the <code>SceneManager</code> class, which is used to manage the generation, switching, and cleanup of the scenes. This file also defines ImGui elements that allow the user to re-generate the scene and switch from the editor scene to the basic static scene, or vice versa.</p>
+</div>
+<br>
+<div id ="SceneManager.h">
+    <h3>SceneManager.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a></code>, this file declares the member variables and functions associated with the <code>SceneManager</code> class.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_scene_editor_scene">src/scene/editor_scene</h2>
+<div id ="AnimatedEntityElement.cpp">
+    <h3>AnimatedEntityElement.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with animated entities. Animated entities are just like normal entities, except they can have animations applied to them. Some notable functions include <code>new_default</code> which defines the default properties for UI-created animated entities, and <code>add_imgui_edit_section</code> which defines ImGui elements that allow the user to manipulate the animated entities in a scene.</p>
+</div>
+<br>
+<div id ="AnimatedEntityElement.h">
+    <h3>AnimatedEntityElement.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#AnimatedEntityElement.cpp">AnimatedEntityElement.cpp</a></code>, this file declares the member variables and functions associated with animated entities.</p>
+</div>
+<br>
+<div id ="EmissiveEntityElement.cpp">
+    <h3>EmissiveEntityElement.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with emissive entities. Emissive entities are (externally) unlit entities whose colour is only dependent upon their applied texture and emissive tint (that is, they are not affected by the lights in the scene). Some notable functions include <code>new_default</code> which defines the default properties for UI-created emissive entities, and <code>add_imgui_edit_section</code> which defines ImGui elements that allow the user to manipulate the emissive entities in a scene.</p>
+</div>
+<br>
+<div id ="EmissiveEntityElement.h">
+    <h3>EmissiveEntityElement.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#EmissiveEntityElement.cpp">EmissiveEntityElement.cpp</a></code>, this file declares the member variables and functions associated with emissive entities.</p>
+</div>
+<br>
+<div id ="EntityElement.cpp">
+    <h3>EntityElement.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with normal entities. Some notable functions include <code>new_default</code> which defines the default properties for UI-created normal entities, and <code>add_imgui_edit_section</code> which defines ImGui elements that allow the user to manipulate the normal entities in a scene.</p>
+</div>
+<br>
+<div id ="EntityElement.h">
+    <h3>EntityElement.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#EntityElement.cpp">EntityElement.cpp</a></code>, this file declares the member variables and functions associated with normal entities.</p>
+</div>
+<br>
+<div id ="GroupElement.cpp">
+    <h3>GroupElement.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with group scene elements. Group scene elements are used to group multiple scene elements, allowing the user to manipulate them together. The most notable function is <code>update_instance_data</code> which is how the group element updates the transforms of its constituent scene elements.</p>
+</div>
+<br>
+<div id ="GroupElement.h">
+    <h3>GroupElement.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#GroupElement.cpp">GroupElement.cpp</a></code>, this file declares the member variables and functions associated with group scene elements.</p>
+</div>
+<br>
+<div id ="PointLightElement.cpp">
+    <h3>PointLightElement.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains all of the functions associated with the point light scene element. This includes the constructor, json-related functions, ImGui elements, update instance data function, and an accessor function for the light's element type name.</p>
+</div>
+<br>
+<div id ="PointLightElement.h">
+    <h3>PointLightElement.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="PointLightElement.cpp.html">PointLightElement.cpp</a></code>, this file declares the member variables and functions associated with point light scene elements.</p>
+</div>
+<br>
+<div id ="SceneElement.cpp">
+    <h3>SceneElement.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains functionality that is shared between several types of scene elements, including entity elements, animated entity elements, emissive entity elements, group elements, and point light elements. Note that some of the functionality in this file is only used by some of the scene elements mentioned, for example the function <code><a href="SceneElement.cpp.html#AddEmissiveMaterialImGui">add_emissive_material_imgui_edit_section</a></code> is only used by emissive entity elements, and the function <code><a href="SceneElement.cpp.html#AddMaterialImGui">add_material_imgui_edit_section</a></code> is only used by entity elements and animated entity elements.</p>
+</div>
+<br>
+<div id ="SceneElement.h">
+    <h3>SceneElement.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="SceneElement.cpp.html">SceneElement.cpp</a></code>, this file declares the member variables and functions associated with the scene elements.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_system_interfaces">src/system_interfaces</h2>
+<div id ="Window.cpp">
+    <h3>Window.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality associated with the window created by the <code>WindowManager</code> helper class.</p>
+</div>
+<br>
+<div id ="Window.h">
+    <h3>Window.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#Window.cpp">Window.cpp</a></code>, this file declares the functions associated with the window created by <code>WindowManager</code> The <code>WindowData</code> struct is declared here which holds information related to the user's inputs such as key presses, mouse movement, and mouse wheel scrolling.</p>
+</div>
+<br>
+<div id ="WindowManager.cpp">
+    <h3>WindowManager.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file contains the functionality of the helper class <code>WindowManager</code>, which is used to manage the set of open windows.</p>
+</div>
+<br>
+<div id ="WindowManager.h">
+    <h3>WindowManager.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#WindowManager.cpp">WindowManager.cpp</a></code>, this file declares the functions associated with the <code>WindowManager</code> helper class.</p>
+</div>
+<br>
+<br>
+
+<h2 id="src_utility">src/utility</h2>
+<div id ="HelperTypes.h">
+    <h3>HelperTypes.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines various utility structs and classes to simplify string formatting and hashing.</p>
+</div>
+<br>
+<div id ="JsonHelper.h">
+    <h3>JsonHelper.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines various helper functions that simplify saving and loading glm vectors to and from json.</p>
+</div>
+<br>
+<div id ="Math.h">
+    <h3>Math.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the <code>clamp</code> function, used to ensure a value is clamped between a given min and max.</p>
+</div>
+<br>
+<div id ="OpenGL.cpp">
+    <h3>OpenGL.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines various OpenGL-related functions used in setting up the project and checking for OpenGL-related errors.</p>
+</div>
+<br>
+<div id ="OpenGL.h">
+    <h3>OpenGL.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#OpenGL.cpp">OpenGL.cpp</a></code>, this file specifies the OpenGL version the project creates a context for (4.1 for Apple, 4.3 for all other OS) and declares several OpenGL-related functions used to set up the project.</p>
+</div>
+<br>
+<div id ="PerformanceCounter.cpp">
+    <h3>PerformanceCounter.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the functions associated with the <code>PerformanceCounter</code> class, used to measure the FPS and plot it with an ImGui element.</p>
+</div>
+<br>
+<div id ="PerformanceCounter.h">
+    <h3>PerformanceCounter.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#PerformanceCounter.cpp">PerformanceCounter.cpp</a></code>, this file declares the member variables and functions associated with the <code>PerformanceCounter</code> class.</p>
+</div>
+<br>
+<div id ="SyncManager.cpp">
+    <h3>SyncManager.cpp</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>This file defines the <code>sync</code> function associated with the <code>SyncManager</code> class, which is used to limit the FPS via thread blocking if a FPS cap has been set.</p>
+</div>
+<br>
+<div id ="SyncManager.h">
+    <h3>SyncManager.h</h3>
+    <h4>Functionality and Purpose of this File</h4>
+    <p>Header file for <code><a href="FileSummaries.html#SyncManager.cpp">SyncManager.cpp</a></code>, this file declares the functions associated with the <code>SyncManager</code> class.</p>
+</div>
+</body>
+</html>

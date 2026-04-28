@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>vert.glsl (animated entity)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link" href="../Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link" href="FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link" href="FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link" href="PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link" href="PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link" href="BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link" href="Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link" href="Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link active" href="vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link" href="frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>vert.glsl (animated entity)</h1>
+<br>
+<h3>Location in Project</h3>
+<p>res/shaders/animated_entity/vert.glsl</p>
+<br>
+<h3>Functionality and Purpose of this File</h3>
+<p>This file is the vertex shader used to render animated entities.</p>
+<br>
+<h2>Method Documentation</h2>
+<br>
+<div id="main">
+    <h3><code>void main()</code></h3>
+    <p>This function assigns the values for <code>lighting_result</code> and <code>texture_coordinate</code>, both of which are members of the <code>vertex_out</code> interface block. It also sets the value for <code>gl_Position</code>, which is the result of applying the projection view matrix to the world space vertex position.</p>
+    <h4>Remarks</h4>
+    <p>The <code><a href="lights.glsl.html#TotalLightCalculation">total_light_calculation</a></code> function used to determine the value of <code>vertex_out.lighting_result</code> is defined in <code><a href="lights.glsl.html">lights.glsl</a></code>, as are the <code>LightCalculatioData</code> and <code>Material</code> structs. Overall, this vertex shader is very similar to the vertex shader used for normal entities, with the only difference being that <code>ws_position</code> and <code>ws_normal</code> (and hence <code>vertex_out.lighting_result</code>) are calculated based on the <code>bone_transform</code> matrix.</p>
+</div>
+</body>
+</html>

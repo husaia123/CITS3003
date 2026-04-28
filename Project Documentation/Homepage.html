@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Project Documentation Homepage</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Documentation_Pages\Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link active" href="Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link" href="Documentation_Pages\FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link" href="Documentation_Pages\FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link" href="Documentation_Pages\PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="Documentation_Pages\FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="Documentation_Pages\SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link" href="Documentation_Pages\PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link" href="Documentation_Pages\BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link" href="Documentation_Pages\Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link" href="Documentation_Pages\Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="Documentation_Pages\lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="Documentation_Pages\vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="Documentation_Pages\frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link" href="Documentation_Pages\vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="Documentation_Pages\frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="Documentation_Pages\vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link" href="Documentation_Pages\frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>Project Documentation Homepage</h1>
+<br>
+<h3>Documentation Overview</h3>
+<p>This documentation has two main parts: high-level documentation and "most important files" (low-level documentation).</p>
+<p>The high-level documentation provides an overview of the entire project. It includes an outline of the main render loop function hierarchy, which shows what is involved in rendering each frame, and it includes a list of summaries for every file in the project, to help with understanding what each file is responsible for.</p>
+<p>The low-level documentation includes detailed descriptions of the functions within various important files. These files are ones that you will likely have to familiarize yourself with over the course of the project.</p>
+<br>
+<h3>Tips to Understand the Project Codebase</h3>
+<p>Understanding any codebase takes time and effort, but here are some tips to make the process easier:</p>
+<ul>
+    <li><p><b>Interact with the project:</b> Spend some time running the base project and experimenting with the different ImGui elements.</p></li>
+    <li><p><b>Refer to the low-level documentation:</b> As you work on the project tasks refer to the low-level documentation for the file you are working on, if it exists. If there is no low-level documentation, find the file in <a href="Documentation_Pages\FileSummaries.html">Project File Summaries</a> and you will find a summary of the file's contents and how it fits into the project.</p></li>
+    <li><p><b>Inspect header files for comments:</b> Be sure to look at the header files (.h) of the .cpp files you are working on. These files often contain useful comments that explain the purpose of the class's functions. If there are only a few comments in the header file, identify the implemented class and look for the corresponding header file for more details. For example, in <code><a href="Documentation_Pages\FileSummaries.html#PanningCamera.h">PanningCamera.h</a></code> you can see from the line "<code>class PanningCamera : public CameraInterface</code>" that <code>PanningCamera</code> implements <code>CameraInterface</code>, so it may be worthwhile to look at <code><a href="Documentation_Pages\FileSummaries.html#CameraInterface.h">CameraInterface.h</a></code> for comments on what each function in <code>PanningCamera</code> does.</p></li>
+    <li><p><b>Use code search tools:</b> Tools such as grep (Linux) or grepWin (Windows) can simplify the search for specific functions or variables in the codebase. These tools can point you in the right direction with regards to what files you must work on to achieve a desired functionality.</p></li>
+	<li><p><b>Explore the Main Render Loop Function Hierarchy:</b> Take a look at the <a href="Documentation_Pages\FunctionHierarchy.html">Main Loop Function Hierarchy</a> to get an overview of how the project renders a frame.</p></li>
+</ul>
+<br>
+<h3>What Exactly is ImGui?</h3>
+<p>ImGui (Immediate Mode GUI) is a graphical user interface library. It follows the immediate mode paradigm which means the user interface is constructed and rendered every frame, as opposed to the retained mode paradign where the user interface is built and retained from frame to frame.</p>
+<p>If you learn best by looking at existing code and adapting it to your needs, I recommend exploring the following functions within the project:</p>
+<ul>
+    <li><p>In <code><a href="Documentation_Pages\SceneElement.cpp.html">SceneElement.cpp</a></code>, look at the <code><a href="Documentation_Pages\SceneElement.cpp.html#AddLocalTransformImGui">add_local_transform_imgui_edit_section</a></code> function.</p></li>
+    <li><p>In <code><a href="Documentation_Pages\PanningCamera.cpp.html">PanningCamera.cpp</a></code>, look at the <code><a href="Documentation_Pages\PanningCamera.cpp.html#AddImGui">add_imgui_options_section</a></code> function.</p></li>
+    <li><p>In <code><a href="Documentation_Pages\PointLightElement.cpp.html">PointLightElement.cpp</a></code>, look at the <code><a href="Documentation_Pages\PointLightElement.cpp.html#AddImgui">add_imgui_edit_section</a></code> function.</p></li>
+</ul>
+<p>It is unlikely that you will need to use any ImGui functions that are not already used in the project, however if you wish to learn more about ImGui you can read the documentation available <a href="https://github.com/ocornut/imgui/tree/master/docs#readme" target="_blank">here</a>.</p>
+</body>
+</html>

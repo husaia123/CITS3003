@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>PointLightElement.cpp</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link" href="../Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link" href="FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link" href="FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link" href="PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link active" href="PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link" href="BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link" href="Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link" href="Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link" href="vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link" href="frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>PointLightElement.cpp</h1>
+<br>
+<h3>Location in Project</h3>
+<p>src/scene/editor_scene/PointLightElement.cpp</p>
+<br>
+<h3>Functionality and Purpose of this File</h3>
+<p>This file contains all of the functions associated with the point light scene element. This includes the constructor, json-related functions, ImGui elements, update instance data function, and an accessor function for the light's element type name.</p>
+<br>
+<h2>Method Documentation</h2>
+<br>
+<div id="DefaultConstructor">
+    <h3><code>std::unique_ptr&#60;EditorScene::PointLightElement> EditorScene::PointLightElement::new_default(const SceneContext& scene_context, EditorScene::ElementRef parent)</code></h3>
+    <p>This is the constructor for the point light scene element.</p>
+    <h4>Parameters</h4>
+    <p><code>const SceneContext& scene_context</code>: An object (defined in <code><a href="FileSummaries.html#SceneContext.h">SceneContext.h</a></code> and created in <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code>) that holds information on the window, window manager, model loader, texture loader, and a bool that indicates if ImGui elements are enabled.</p>
+    <p><code>EditorScene::ElementRef parent</code>: The parent element of the new point light. A parent element's transformation is applied to the transformation of their child elements.</p>
+    <h4>Returns</h4>
+    <p>A smart pointer to a new point light object.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in <code><a href="#FromJson">from_json</a></code> defined in <code>PointLightElement.cpp</code>, and in the <code>open</code> function defined in <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code></p>
+</div>
+<br>
+<br>
+<br>
+<div id="FromJson">
+    <h3><code>std::unique_ptr&#60;EditorScene::PointLightElement> EditorScene::PointLightElement::from_json(const SceneContext& scene_context, EditorScene::ElementRef parent, const json& j)</code></h3>
+    <p>This function takes a json element containing values for the point light element's attributes and creates a new point light element with attributes matching the specified values.</p>
+    <h4>Parameters</h4>
+    <p><code>const SceneContext& scene_context</code>: An object (defined in <code><a href="FileSummaries.html#SceneContext.h">SceneContext.h</a></code> and created in <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code>) that holds information on the window, window manager, model loader, texture loader, and a bool that indicates if ImGui elements are enabled.</p>
+    <p><code>EditorScene::ElementRef parent</code>: The parent element of the new point light. A parent element's transformation is applied to the transformation of their child elements.</p>
+    <p><code>const json& j</code>: The json element containing the attribute values of the new point light object.</p>
+    <h4>Returns</h4>
+    <p>A smart pointer to a new point light object.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the <code>open</code> function defined in <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="IntoJson">
+    <h3><code>json EditorScene::PointLightElement::into_json()</code></h3>
+    <p>This function creates a json element containing the attribute values of the point light element this is being called for.</p>
+    <h4>Returns</h4>
+    <p>A json element containing the attribute values of the point light element.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the <code>element_to_labelled_json</code> function defined in <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="AddImgui">
+    <h3><code>void EditorScene::PointLightElement::add_imgui_edit_section(MasterRenderScene& render_scene, const SceneContext& scene_context)</code></h3>
+    <p>This function adds the ImGui elements that allow the user to interact with the point light's properties via the UI. It is called every frame and allows the user to modify the point light's position, colour, intensity, visual scale and if the sphere representing the light is visible.</p>
+    <h4>Parameters</h4>
+    <p><code>MasterRenderScene& render_scene</code>: The master render scene, defined in <code><a href="FileSummaries.html#MasterRenderScene.h">MasterRenderScene.h</a></code>, which holds various information relevant to the scene.</p>
+    <p><code>const SceneContext& scene_context</code>: An object (defined in <code><a href="FileSummaries.html#SceneContext.h">SceneContext.h</a></code> and created in <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code>) that holds information on the window, window manager, model loader, texture loader, and a bool that indicates if ImGui elements are enabled.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the <code>add_imgui_selection_editor</code> function defined in <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="UpdateInstance">
+    <h3><code>void EditorScene::PointLightElement::update_instance_data()</code></h3>
+    <p>This function updates the point light element's instance data, in particular this involves updating the position of the point light element's light, and both the model matrix and emission tint of the point light element's sphere.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in a variety of places, however it is primarily called in <code><a href="#AddImgui">add_imgui_edit_section</a></code>, defined in <code>PointLightElement.cpp</code>.</p>
+    <h4>Remarks</h4>
+    <p>We don't update the colour of the point light element's light here because that is changed directly via the ImGui elements, defined in the <code><a href="#AddImgui">add_imgui_edit_section</a></code>.</p>
+</div>
+<br>
+<br>
+<br>
+<div id="ElementTypeName">
+    <h3><code>const char* EditorScene::PointLightElement::element_type_name()</code></h3>
+    <p>This function returns a character array containing the element type name of the point light element, declared in <code><a href="FileSummaries.html#PointLightElement.h">PointLightElement.h</a></code>.</p>
+    <h4>Returns</h4>
+    <p>A character array containing the element type name of the point light element.</p>
+    <h4>Where is this called?</h4>
+    <p>This is called in the <code>element_to_labelled_json</code> function defined in <code><a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a></code>.</p>
+</div>
+</body>
+</html>

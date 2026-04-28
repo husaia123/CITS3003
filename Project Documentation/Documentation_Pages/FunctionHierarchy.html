@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>Main Loop Function Hierarchy</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link" href="../Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link" href="FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link active" href="FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link" href="PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link" href="PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link" href="BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link" href="Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link" href="Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link" href="vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link" href="frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>Main Loop Function Hierarchy</h1>
+<br>
+<p>Here is an overview of the function (and file) hierarchy inside the main render loop of <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code>, where every loop renders a frame. For usability this summary only includes the most important functions in the main render loop hierarchy. If you want to gain a deeper understanding of the project beyond this summary, I recommend looking through the project files, as there are many comments that provide details that are not included here. To understand the notation used below, the file name within square brackets [...] is the file associated with the line of code or functionality described. The blue line and dots denote function calls belonging to <code><a href="FileSummaries.html#main.cpp">main.cpp</a></code>.</p>
+<br>
+<ul class="function-hierarchy-list">
+    <li class="main-function">
+        <code>window_manager.update();</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>Process window/key/mouse events that have happened since the last loop. [<a href="FileSummaries.html#WindowManager.cpp">WindowManager.cpp</a>]</p>
+            </li>
+        </ul>
+    </li>
+    <li class="main-function">
+        <code>master_renderer.update(window);</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>Tell the MasterRenderer that we are starting a new frame. [<a href="FileSummaries.html#MasterRenderer.cpp">MasterRenderer.cpp</a>]</p>
+            </li>
+        </ul>
+    </li>
+    <li class="main-function">
+        <code>scene_manager.add_imgui_options_section(scene_context);</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>Add the ImGui associated with the Scene Manager, that allows swapping and re-generation of the scene. [<a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a>]</p>
+            </li>
+            <li>
+                <p><code>current_scene->add_imgui_options_section();</code> [<a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a>]</p>
+                <ul>
+                    <li>
+                        <p>Add the ImGui associated with the Scene Settings, that allows swapping between panning and flying camera. [<a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a> or <a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a>]</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <p><code>current_scene->get_camera().add_imgui_options_section(scene_context);</code> [<a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a>]</p>
+                <ul>
+                    <li>
+                        <p>Add the ImGui associated with the Camera Options, that allows the user to manipulate the camera's properties. [<a href="FileSummaries.html#PanningCamera.cpp">PanningCamera.cpp</a> or <a href="FileSummaries.html#FlyingCamera.cpp">FlyingCamera.cpp</a>]</p>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="main-function">
+        <code>master_renderer.add_imgui_options_section(window_manager);</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>Add the ImGui associated with the Render Settings and Shader Options, which includes functionality such as enabling an FPS cap and reloading the shader files. [<a href="FileSummaries.html#MasterRenderer.cpp">MasterRenderer.cpp</a>]</p>
+            </li>
+        </ul>
+    </li>
+    <li class="main-function">
+        <code>performance_counter.add_imgui_options_section((float) window_manager.get_delta_time());</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>Add the ImGui associated with the Performance Metrics, which plots the frame times and various other metrics. [<a href="FileSummaries.html#PerformanceCounter.cpp">PerformanceCounter.cpp</a>]</p>
+            </li>
+        </ul>
+    </li>
+    <li class="main-function">
+        <code>scene_manager.tick_scene(scene_context);</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>Ticks the current scene. [<a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a>]</p>
+            </li>
+            <li>
+                <code>current_scene->tick(dt, scene_context);</code> [<a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a>]
+                <ul>
+                    <li>
+                        <p>Exit if 'Esc' key was pressed, cycle camera mode if 'V' key was pressed. [<a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a> or <a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a>]</p>
+                    </li>
+                    <li>
+                        <code>add_imgui_selection_editor(scene_context);</code> [<a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a> or <a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a>]
+                        <ul>
+                            <li>
+                                <p>Add the ImGui associated with the Selection Editor. [<a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a> or <a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a>]</p>
+                            </li>
+                            <li>
+                                <code>(*selected_element)->add_imgui_edit_section(render_scene, scene_context);</code> [<a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a> or <a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a>]
+                                <ul>
+                                    <li>
+                                        <p>Add the ImGui associated with the selected scene element. [<a href="FileSummaries.html#EntityElement.cpp">EntityElement.cpp</a> or whatever corresponds to the selected element]</p>
+                                    </li>
+                                    <li>
+                                        <code>add_local_transform_imgui_edit_section(render_scene, scene_context);</code> [eg. <a href="FileSummaries.html#EntityElement.cpp">EntityElement.cpp</a>]
+                                        <ul>
+                                            <li>
+                                                <p>Add the ImGui associated with the Local Transformation of the selected scene element. [<a href="FileSummaries.html#SceneElement.cpp">SceneElement.cpp</a>]</p>
+                                            </li>
+                                            <li>
+                                                <code>update_instance_data();</code> [<a href="FileSummaries.html#SceneElement.cpp">SceneElement.cpp</a>]
+                                                <ul>
+                                                    <li>
+                                                        <p>Update the instance data of the selected scene element based on the ImGui inputs. [eg. <a href="FileSummaries.html#EntityElement.cpp">EntityElement.cpp</a>]</p>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <code>add_material_imgui_edit_section(render_scene, scene_context);</code> [eg. <a href="FileSummaries.html#EntityElement.cpp">EntityElement.cpp</a>]
+                                        <ul>
+                                            <li>
+                                                <p>Add the ImGui associated with the Material properties of the selected scene element. [<a href="FileSummaries.html#SceneElement.cpp">SceneElement.cpp</a>]</p>
+                                            </li>
+                                            <li>
+                                                <code>update_instance_data();</code> [<a href="FileSummaries.html#SceneElement.cpp">SceneElement.cpp</a>]
+                                                <ul>
+                                                    <li>
+                                                        <p>Update the instance data of the selected scene element based on the ImGui inputs. [eg. <a href="FileSummaries.html#EntityElement.cpp">EntityElement.cpp</a>]</p>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>add_imgui_scene_hierarchy(scene_context);</code> [<a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a> or <a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a>]
+                        <ul>
+                            <li>
+                                <p>Add the ImGui associated with the Scene Hierarchy. This includes: adding new entities to the scene, adding new lights to the scene, adding group scene elements, deleting scene elements, generating the scene element tree, and saving and loading the scene to and from json. For brevity I will not go down the hierarchy for any of these functions, if you wish to understand how any particular function works I suggest starting from EditorScene.cpp and investigating from there. [<a href="FileSummaries.html#EditorScene.cpp">EditorScene.cpp</a> or <a href="FileSummaries.html#BasicStaticScene.cpp">BasicStaticScene.cpp</a>]</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>current_scene->get_camera().update(window, dt, true);</code> [<a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a>]
+                <ul>
+                    <li>
+                        <p>Calculate changes to the camera's properties based on the movement of the mouse and what mouse buttons are being pressed, and re-calculate the camera's view and projection matrices. [<a href="FileSummaries.html#PanningCamera.cpp">PanningCamera.cpp</a> or <a href="FileSummaries.html#FlyingCamera.cpp">FlyingCamera.cpp</a>]</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <code>current_scene->get_render_scene().use_camera(current_scene->get_camera());</code> [<a href="FileSummaries.html#SceneManager.cpp">SceneManager.cpp</a>]
+                <ul>
+                    <li>
+                        <p>Update the global data for each render scene. [<a href="FileSummaries.html#MasterRenderScene.cpp">MasterRenderScene.cpp</a>]</p>
+                    </li>
+                    <li>
+                        <code>entity_scene.global_data.use_camera(camera_interface);</code> (this is also called for <code>animated_entity_scene</code> and <code>emissive_entity_scene</code>) [<a href="FileSummaries.html#MasterRenderScene.cpp">MasterRenderScene.cpp</a>]
+                        <ul>
+                            <li>
+                                <p>Update the projection view matrix, camera position, and gamma variables stored in the global data. [<a href="FileSummaries.html#BaseEntityShader.h">BaseEntityShader.h</a>]</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="main-function">
+        <code>master_renderer.render_scene(scene_manager.get_current_scene()->get_render_scene(), scene_context);</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>Render the provided MasterRenderScene with the provided SceneContext. [<a href="FileSummaries.html#MasterRenderer.cpp">MasterRenderer.cpp</a>]</p>
+            </li>
+            <li>
+                <code>entity_renderer.render(render_scene.entity_scene, render_scene.light_scene);</code> (this is also called for <code>animated_entity_renderer</code> and <code>emissive_entity_renderer</code>, though notably the emissive entity renderer doesn't use the light scene as a parameter. I will only go down the hierarchy of the <code>entity_renderer</code>) [<a href="FileSummaries.html#MasterRenderer.cpp">MasterRenderer.cpp</a>]
+                <ul>
+                    <li>
+                        <p>Render the entity scene. [<a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a>]</p>
+                    </li>
+                    <li>
+                        <code>shader.set_global_data(render_scene.global_data);</code> [<a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a>]
+                        <ul>
+                            <li>
+                                <p>Set the values of the shader uniforms related to the scene's global data. [<a href="FileSummaries.html#BaseEntityShader.cpp">BaseEntityShader.cpp</a>]</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>shader.set_instance_data(entity->instance_data);</code> [<a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a>]
+                        <ul>
+                            <li>
+                                <p>Set the value of the normal matrix shader uniform. [<a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a>]</p>
+                            </li>
+                            <li>
+                                <code>BaseLitEntityShader::set_instance_data(instance_data);</code> [<a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a>]
+                                <ul>
+                                    <li>
+                                        <p>Set the values of the shader uniforms related to the given entity's material properties. [<a href="FileSummaries.html#BaseLitEntityShader.cpp">BaseLitEntityShader.cpp</a>]</p> 
+                                    </li>
+                                    <li>
+                                        <code>BaseEntityShader::set_instance_data(instance_data);</code> [<a href="FileSummaries.html#BaseLitEntityShader.cpp">BaseLitEntityShader.cpp</a>]
+                                        <ul>
+                                            <li>
+                                                <p>Set the value of the model matrix shader uniform. [<a href="FileSummaries.html#BaseEntityShader.cpp">BaseEntityShader.cpp</a>]</p>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>shader.set_point_lights(light_scene.get_nearest_point_lights(position, BaseLitEntityShader::MAX_PL, 1));</code> [<a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a>]
+                        <ul>
+                            <li>
+                                <p>Populate the data of the point light uniform buffer object with the nearest point lights up to <code>MAX_PL</code> then bind and upload the uniform buffer object to be used in the shaders. [<a href="FileSummaries.html#BaseLitEntityShader.cpp">BaseLitEntityShader.cpp</a>]</p>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <code>glDrawElementsBaseVertex(GL_TRIANGLES, entity->model->get_index_count(), GL_UNSIGNED_INT, nullptr, entity->model->get_vertex_offset());</code> [<a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a>]
+                        <ul>
+                            <li>
+                                <p>Render the vertices of the given entity, using the appropriate shaders. [<a href="FileSummaries.html#EntityRenderer.cpp">EntityRenderer.cpp</a>]</p>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="main-function">
+        <code>imgui_manager.render();</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>Tell ImGui to render the UI elements onto the frame. [<a href="FileSummaries.html#ImGuiManager.cpp">ImGuiManager.cpp</a>]</p>
+            </li>
+        </ul>
+    </li>
+    <li class="main-function">
+        <code>window.swap_buffers();</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>Swap the image buffers (double buffering). [<a href="FileSummaries.html#Window.cpp">Window.cpp</a>]</p>
+            </li>
+        </ul>
+    </li>
+    <li class="main-function">
+        <code>master_renderer.sync();</code> [<a href="FileSummaries.html#main.cpp">main.cpp</a>]
+        <ul>
+            <li>
+                <p>If an FPS cap has been set, block the thread such that the iterations through the main render loop do not exceed the FPS cap. [<a href="FileSummaries.html#MasterRenderer.cpp">MasterRenderer.cpp</a> and <a href="FileSummaries.html#SyncManager.cpp">SyncManager.cpp</a>]</p>
+            </li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>

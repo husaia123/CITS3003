@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<title>frag.glsl (emissive entity)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="Style.css">
+
+<body>
+<div class="link-container">
+    <h4 class="floating-link">Homepage</h4>
+    <a class="floating-link" href="../Homepage.html">Home</a>
+    <h4 class="floating-link">High-Level Documentation</h4>
+    <a class="floating-link" href="FileSummaries.html">Project File Summaries</a>
+    <a class="floating-link" href="FunctionHierarchy.html">Main Loop Function Hierarchy</a>
+    <h4 class="floating-link">Most Important Files</h4>
+    <a class="floating-link" href="PanningCamera.cpp.html"          >PanningCamera.cpp</a>
+    <a class="floating-link" href="FlyingCamera.cpp.html"           >FlyingCamera.cpp</a>
+    <a class="floating-link" href="SceneElement.cpp.html"           >SceneElement.cpp</a>
+    <a class="floating-link" href="PointLightElement.cpp.html"      >PointLightElement.cpp</a>
+    <a class="floating-link" href="BaseLitEntityShader.cpp.html"    >BaseLitEntityShader.cpp</a>
+    <a class="floating-link" href="Lights.h.html"                   >Lights.h</a>
+    <a class="floating-link" href="Lights.cpp.html"                 >Lights.cpp</a>
+    <a class="floating-link" href="lights.glsl.html"                >lights.glsl</a>
+    <a class="floating-link" href="vert.glsl (entity).html"         >vert.glsl (entity)</a>
+    <a class="floating-link" href="frag.glsl (entity).html"         >frag.glsl (entity)</a>
+    <a class="floating-link" href="vert.glsl (animated_entity).html">vert.glsl (animated entity)</a>
+    <a class="floating-link" href="frag.glsl (animated_entity).html">frag.glsl (animated entity)</a>
+    <a class="floating-link" href="vert.glsl (emissive_entity).html">vert.glsl (emissive entity)</a>
+    <a class="floating-link active" href="frag.glsl (emissive_entity).html">frag.glsl (emissive entity)</a>
+</div>
+<h1>frag.glsl (emissive entity)</h1>
+<br>
+<h3>Location in Project</h3>
+<p>res/shaders/emissive_entity/frag.glsl</p>
+<br>
+<h3>Functionality and Purpose of this File</h3>
+<p>This file is the fragment shader used to render emissive entities.</p>
+<br>
+<h2>Method Documentation</h2>
+<br>
+<div id="main">
+    <h3><code>void main()</code></h3>
+    <p>This function sets the value for <code>out_colour</code>, which corresponds to the fragment colour, based on <code>texture_colour</code> and <code>emissive_tint</code>.</p>
+    <h4>Remarks</h4>
+    <p>For more information on what <code>texture(emissive_texture, frag_in.texture_coordinate).rgb</code> does, see the documentation <a href="https://registry.khronos.org/OpenGL-Refpages/gl4/html/texture.xhtml" target="_blank">here</a>. Also notice that unlike in the fragment shaders for <code><a href="frag.glsl (entity).html">entity</a></code> and <code><a href="frag.glsl (animated_entity).html">animated_entity</a></code>, <code>resolve_textured_light_calculation</code> is not used here. This is because the emissive entity is not a lit entity, and so its colour is only dependent upon its texture and emissive tint.</p>
+</div>
+</body>
+</html>

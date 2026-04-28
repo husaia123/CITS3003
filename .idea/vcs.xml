@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project Base" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project Base/lib/assimp" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project Base/lib/glfw" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project Base/lib/glm" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project Base/lib/imgui/imgui" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project Base/lib/json" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project Base/lib/stb/stb" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Project Base/lib/tinyfiledialogs/tinyfiledialogs" vcs="Git" />
+  </component>
+</project>
