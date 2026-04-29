@@ -74,12 +74,12 @@ void EditorScene::EntityElement::add_imgui_edit_section(MasterRenderScene& rende
 
     add_local_transform_imgui_edit_section(render_scene, scene_context);
     add_material_imgui_edit_section(render_scene, scene_context);
+    ImGui::DragFloat2("Texture Scale", &rendered_entity->render_data.texture_scale[0], 0.01f, 0.01f, 10.0f);
 
     ImGui::Text("Model & Textures");
     scene_context.model_loader.add_imgui_model_selector("Model Selection", rendered_entity->model);
     scene_context.texture_loader.add_imgui_texture_selector("Diffuse Texture", rendered_entity->render_data.diffuse_texture);
     scene_context.texture_loader.add_imgui_texture_selector("Specular Map", rendered_entity->render_data.specular_map_texture, false);
-    ImGui::DragFloat2("Texture Scale", &rendered_entity->render_data.texture_scale[0], 0.01f, 0.01f, 10.0f);
     ImGui::Spacing();
 }
 
