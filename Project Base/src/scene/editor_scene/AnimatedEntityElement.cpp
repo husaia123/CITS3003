@@ -42,6 +42,9 @@ std::unique_ptr<EditorScene::AnimatedEntityElement> EditorScene::AnimatedEntityE
     new_entity->rendered_entity->mesh_hierarchy = scene_context.model_loader.load_hierarchy_from_file<AnimatedEntityRenderer::VertexData>(j["model"]);
     new_entity->rendered_entity->render_data.diffuse_texture = texture_from_json(scene_context, j["diffuse_texture"]);
     new_entity->rendered_entity->render_data.specular_map_texture = texture_from_json(scene_context, j["specular_map_texture"]);
+    if (j.contains("texture_scale")) {
+        new_entity->rendered_entity->render_data.texture_scale = j["texture_scale"];
+    }
 
     json animation_parameters = j["animation_parameters"];
     new_entity->animation_parameters.animation_id = animation_parameters["animation_id"];
@@ -68,6 +71,7 @@ json EditorScene::AnimatedEntityElement::into_json() const {
         {"model", rendered_entity->mesh_hierarchy->filename.value()},
         {"diffuse_texture", texture_to_json(rendered_entity->render_data.diffuse_texture)},
         {"specular_map_texture", texture_to_json(rendered_entity->render_data.specular_map_texture)},
+        {"texture_scale", rendered_entity->render_data.texture_scale},
         {"animation_parameters", {
             {"animation_id", animation_parameters.animation_id},
             {"speed", animation_parameters.speed},
@@ -92,6 +96,7 @@ void EditorScene::AnimatedEntityElement::add_imgui_edit_section(MasterRenderScen
     }
     scene_context.texture_loader.add_imgui_texture_selector("Diffuse Texture", rendered_entity->render_data.diffuse_texture);
     scene_context.texture_loader.add_imgui_texture_selector("Specular Map", rendered_entity->render_data.specular_map_texture, false);
+    ImGui::DragFloat2("Texture Scale", &rendered_entity->render_data.texture_scale[0], 0.01f, 0.01f, 10.0f);
     ImGui::Spacing();
 }
 

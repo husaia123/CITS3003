@@ -34,6 +34,7 @@ void EntityRenderer::EntityRenderer::render(const RenderScene& render_scene, con
 
     for (const auto& entity: render_scene.entities) {
         shader.set_instance_data(entity->instance_data);
+        shader.set_render_data(entity->render_data);
 
         glm::vec3 position = entity->instance_data.model_matrix[3];
         // IMPORTANT NOTE:

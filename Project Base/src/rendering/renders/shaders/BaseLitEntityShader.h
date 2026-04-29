@@ -35,10 +35,11 @@ struct BaseLitEntityInstanceData : public BaseEntityInstanceData {
 
 struct BaseLitEntityRenderData {
     BaseLitEntityRenderData(std::shared_ptr<TextureHandle> diffuse_texture, std::shared_ptr<TextureHandle> specular_map_texture)
-        : diffuse_texture(std::move(diffuse_texture)), specular_map_texture(std::move(specular_map_texture)) {}
+        : diffuse_texture(std::move(diffuse_texture)), specular_map_texture(std::move(specular_map_texture)), texture_scale(1.0f, 1.0f) {}
 
     std::shared_ptr<TextureHandle> diffuse_texture;
     std::shared_ptr<TextureHandle> specular_map_texture;
+    glm::vec2 texture_scale;
 };
 
 using BaseLitEntityGlobalData = BaseEntityGlobalData;
@@ -53,6 +54,7 @@ protected:
     int specular_tint_location{};
     int ambient_tint_location{};
     int shininess_location{};
+    int texture_scale_location{};
 
     static const uint POINT_LIGHT_BINDING = 0;
 
@@ -63,6 +65,8 @@ public:
                         std::unordered_map<std::string, std::string> frag_defines = {});
 
     void set_instance_data(const BaseLitEntityInstanceData& instance_data);
+
+    void set_render_data(const BaseLitEntityRenderData& render_data);
 
     void set_point_lights(const std::vector<PointLight>& point_lights);
 protected:
