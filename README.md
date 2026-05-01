@@ -6,7 +6,6 @@ This project is configured and tested on **Windows**.
 
 ## Requirements
 
-- Windows 10 or later
 - CMake (version 3.20 or newer recommended)
 - A C++ compiler compatible with your chosen Visual Studio or MSVC toolchain
 - OpenGL-compatible graphics drivers
@@ -40,3 +39,9 @@ This project is configured and tested on **Windows**.
 ## Notes
 
 do we need to include opengl and compiler (ninjax64) setup or assume theyve done setup guide
+near plane in camera options does nothing (doesnt work?)
+
+cd "Project Base"
+cmake -S . -B build
+cmake --build build --config Debug
+.\build\Debug\cits3003_project.exe
