@@ -50,7 +50,7 @@ void PanningCamera::update(const Window& window, float dt, bool controls_enabled
 
     // Compute final rotation matrix
     auto rot_matrix = glm::rotate(yaw, UP) * glm::rotate(pitch, RIGHT);
-    auto forward = -glm::vec3{rot_matrix[2]};
+    auto forward = glm::vec3{rot_matrix[2]};
     auto camera_position = focus_point + distance * forward;
 
     view_matrix = glm::lookAt(camera_position, focus_point, glm::vec3{rot_matrix[1]});
