@@ -43,6 +43,9 @@ std::unique_ptr<EditorScene::EntityElement> EditorScene::EntityElement::from_jso
     new_entity->rendered_entity->model = scene_context.model_loader.load_from_file<EntityRenderer::VertexData>(j["model"]);
     new_entity->rendered_entity->render_data.diffuse_texture = texture_from_json(scene_context, j["diffuse_texture"]);
     new_entity->rendered_entity->render_data.specular_map_texture = texture_from_json(scene_context, j["specular_map_texture"]);
+    if (j.contains("texture_scale")) {
+        new_entity->rendered_entity->render_data.texture_scale = j["texture_scale"];
+    }
 
     new_entity->update_instance_data();
     return new_entity;
@@ -61,6 +64,7 @@ json EditorScene::EntityElement::into_json() const {
         {"model", rendered_entity->model->get_filename().value()},
         {"diffuse_texture", texture_to_json(rendered_entity->render_data.diffuse_texture)},
         {"specular_map_texture", texture_to_json(rendered_entity->render_data.specular_map_texture)},
+        {"texture_scale", rendered_entity->render_data.texture_scale},
     };
 }
 
@@ -70,6 +74,7 @@ void EditorScene::EntityElement::add_imgui_edit_section(MasterRenderScene& rende
 
     add_local_transform_imgui_edit_section(render_scene, scene_context);
     add_material_imgui_edit_section(render_scene, scene_context);
+    ImGui::DragFloat2("Texture Scale", &rendered_entity->render_data.texture_scale[0], 0.01f, 0.01f, 10.0f);
 
     ImGui::Text("Model & Textures");
     scene_context.model_loader.add_imgui_model_selector("Model Selection", rendered_entity->model);

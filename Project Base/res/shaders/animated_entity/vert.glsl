@@ -18,6 +18,20 @@ out VertexOut {
 // Per instance data
 uniform mat4 model_matrix;
 
+// Material properties
+uniform vec3 diffuse_tint;
+uniform vec3 specular_tint;
+uniform vec3 ambient_tint;
+uniform float shininess;
+uniform vec2 texture_scale;
+
+// Light Data
+#if NUM_PL > 0
+layout (std140) uniform PointLightArray {
+    PointLightData point_lights[NUM_PL];
+};
+#endif
+
 // Animation Data
 uniform mat4 bone_transforms[BONE_TRANSFORMS];
 
@@ -39,10 +53,9 @@ void main() {
 
     vec3 ws_position = (animation_matrix * vec4(vertex_position, 1.0f)).xyz;
     vec3 ws_normal = normalize(normal_matrix * normal);
-
     vertex_out.ws_position = ws_position;
     vertex_out.ws_normal = ws_normal;
-    vertex_out.texture_coordinate = texture_coordinate;
+    vertex_out.texture_coordinate = texture_coordinate * texture_scale;
 
     gl_Position = projection_view_matrix * vec4(ws_position, 1.0f);
 }
