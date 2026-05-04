@@ -22,6 +22,8 @@ namespace EditorScene {
 
         void add_imgui_edit_section(MasterRenderScene& render_scene, const SceneContext& scene_context) override;
 
+        void add_material_imgui_edit_section(MasterRenderScene& render_scene, const SceneContext& scene_context);
+
         void update_instance_data() override;
 
         void add_to_render_scene(MasterRenderScene& target_render_scene) override {
