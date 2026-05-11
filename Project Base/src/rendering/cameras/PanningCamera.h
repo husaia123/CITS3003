@@ -10,7 +10,7 @@ class PanningCamera : public CameraInterface {
     float init_pitch = 0.0f;
     float init_yaw = 0.0f;
 
-    float init_near = 0.01f;
+    float init_near_plane = 0.01f;
     float init_fov = glm::radians(90.0f);
 
     float init_gamma = 2.2f;
@@ -20,7 +20,7 @@ class PanningCamera : public CameraInterface {
     float pitch;
     float yaw;
 
-    float near;
+    float near_plane;
     float fov;
 
     const glm::vec3 UP = {0.0f, 1.0f, 0.0f};
@@ -49,7 +49,7 @@ public:
     /// Construct the Camera with default initial state
     PanningCamera();
     /// Construct the Camera with a specific initial state, which will also be the reset state.
-    PanningCamera(float distance, glm::vec3 focus_point, float pitch, float yaw, float near, float fov);
+    PanningCamera(float distance, glm::vec3 focus_point, float pitch, float yaw, float near_plane, float fov);
 
     void update(const Window& window, float dt, bool controls_enabled) override;
 

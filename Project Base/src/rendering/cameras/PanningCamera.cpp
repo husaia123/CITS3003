@@ -7,10 +7,10 @@
 #include "utility/Math.h"
 #include "rendering/imgui/ImGuiManager.h"
 
-PanningCamera::PanningCamera() : distance(init_distance), focus_point(init_focus_point), pitch(init_pitch), yaw(init_yaw), near(init_near), fov(init_fov) {}
+PanningCamera::PanningCamera() : distance(init_distance), focus_point(init_focus_point), pitch(init_pitch), yaw(init_yaw), near_plane(init_near_plane), fov(init_fov) {}
 
-PanningCamera::PanningCamera(float distance, glm::vec3 focus_point, float pitch, float yaw, float near, float fov)
-    : init_distance(distance), init_focus_point(focus_point), init_pitch(pitch), init_yaw(yaw), init_near(near), init_fov(fov), distance(distance), focus_point(focus_point), pitch(pitch), yaw(yaw), near(near), fov(fov) {}
+PanningCamera::PanningCamera(float distance, glm::vec3 focus_point, float pitch, float yaw, float near_plane, float fov)
+    : init_distance(distance), init_focus_point(focus_point), init_pitch(pitch), init_yaw(yaw), init_near_plane(near_plane), init_fov(fov), distance(distance), focus_point(focus_point), pitch(pitch), yaw(yaw), near_plane(near_plane), fov(fov) {}
 
 void PanningCamera::update(const Window& window, float dt, bool controls_enabled) {
     if (controls_enabled) {
@@ -56,7 +56,7 @@ void PanningCamera::update(const Window& window, float dt, bool controls_enabled
     view_matrix = glm::lookAt(camera_position, focus_point, glm::vec3{rot_matrix[1]});
     inverse_view_matrix = glm::inverse(view_matrix);
 
-    projection_matrix = glm::infinitePerspective(fov, window.get_framebuffer_aspect_ratio(), near);
+    projection_matrix = glm::infinitePerspective(fov, window.get_framebuffer_aspect_ratio(), near_plane);
     inverse_projection_matrix = glm::inverse(projection_matrix);
 }
 
@@ -66,7 +66,7 @@ void PanningCamera::reset() {
     pitch = init_pitch;
     yaw = init_yaw;
     fov = init_fov;
-    near = init_near;
+    near_plane = init_near_plane;
     gamma = init_gamma;
 }
 
@@ -90,7 +90,7 @@ void PanningCamera::add_imgui_options_section(const SceneContext& scene_context)
     ImGui::DragDisableCursor(scene_context.window);
     yaw = glm::radians(glm::mod(yaw_degrees, 360.0f));
 
-    ImGui::SliderFloat("Near Plane", &near, 0.001f, 1.0f, "%.3f", ImGuiSliderFlags_Logarithmic);
+    ImGui::SliderFloat("Near Plane", &near_plane, 0.001f, 1.0f, "%.3f", ImGuiSliderFlags_Logarithmic);
 
     float fov_degrees = glm::degrees(fov);
     ImGui::SliderFloat("FOV", &fov_degrees, 40.0f, 170.0f);
