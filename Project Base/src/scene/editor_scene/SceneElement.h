@@ -3,8 +3,11 @@
 
 #include <memory>
 #include <list>
+#include <vector>
+#include <algorithm>
 
 #include <glm/glm.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include "utility/JsonHelper.h"
 #include "../SceneInterface.h"
@@ -80,6 +83,13 @@ namespace EditorScene {
         virtual ~SceneElement() = default;
     };
 
+    struct LocalTransformKeyFrame {
+        float time_seconds = 0.0f;
+        glm::vec3 position{0.0f};
+        glm::vec3 euler_rotation{0.0f};
+        glm::vec3 scale{1.0f};
+    };
+
     /// A component for a SceneElement to add default local transform behaviour
     class LocalTransformComponent : virtual public SceneElement {
     public:
@@ -87,6 +97,12 @@ namespace EditorScene {
         glm::vec3 position;
         glm::vec3 euler_rotation;
         glm::vec3 scale;
+
+        std::vector<LocalTransformKeyFrame> keyframes{};
+        float keyframe_time = 0.0f;
+        float keyframe_speed = 1.0f;
+        bool keyframe_playing = false;
+        bool keyframe_loop = true;
 
     protected:
         LocalTransformComponent(const glm::vec3& position, const glm::vec3& euler_rotation, const glm::vec3& scale) : position(position), euler_rotation(euler_rotation), scale(scale) {}
@@ -96,7 +112,19 @@ namespace EditorScene {
         void update_local_transform_from_json(const json& json);
         [[nodiscard]] json local_transform_into_json() const;
 
+    public:
+        void update_keyframe_animation(float dt);
+        [[nodiscard]] bool has_keyframe_animation() const;
+        [[nodiscard]] float keyframe_duration() const;
         [[nodiscard]] glm::mat4 calc_model_matrix() const;
+
+    private:
+        static glm::quat quaternion_from_euler(const glm::vec3& euler);
+        [[nodiscard]] std::tuple<glm::vec3, glm::quat, glm::vec3> sample_keyframe_transform(float time_seconds) const;
+        void sort_keyframes();
+        void add_keyframe_at_current_time();
+        void remove_keyframe_at(size_t index);
+        void clear_keyframes();
     };
 
     class LitMaterialComponent : virtual public SceneElement {
