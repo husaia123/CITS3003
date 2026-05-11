@@ -87,6 +87,7 @@ void EditorScene::LocalTransformComponent::add_local_transform_imgui_edit_sectio
         ImGui::Checkbox("[Lock]", &lock_scale);
     }
 
+    // UI to control keyframe animation
     ImGui::Text("Keyframe Animation");
     if (ImGui::Button("Add Keyframe")) {
         add_keyframe_at_current_time();
@@ -98,6 +99,7 @@ void EditorScene::LocalTransformComponent::add_local_transform_imgui_edit_sectio
         transformUpdated = true;
     }
 
+    // Show keyframe controls if there are any keyframes
     if (!keyframes.empty()) {
         const float duration = keyframe_duration();
         if (duration > 0.0f) {
@@ -105,7 +107,8 @@ void EditorScene::LocalTransformComponent::add_local_transform_imgui_edit_sectio
                 transformUpdated = true;
             }
         }
-
+        
+        // Only show play options if more than 2 keyframes
         if (keyframes.size() >= 2) {
             if (ImGui::Checkbox("Play", &keyframe_playing)) {
                 if (keyframe_time > duration) {
@@ -122,6 +125,8 @@ void EditorScene::LocalTransformComponent::add_local_transform_imgui_edit_sectio
 
             ImGui::Separator();
         }
+
+        // Show controls for each keyframe
         for (size_t i = 0; i < keyframes.size(); ++i) {
             auto& keyframe = keyframes[i];
             std::string node_label = std::string("Keyframe ") + std::to_string(i);
@@ -161,9 +166,11 @@ void EditorScene::LocalTransformComponent::add_local_transform_imgui_edit_sectio
 
 glm::mat4 EditorScene::LocalTransformComponent::calc_model_matrix() const {
     glm::vec3 current_position = position;
+    // Changed to quaternion to avoid gimbal lock issues when interpolating rotation between keyframes
     glm::quat current_rotation = quaternion_from_euler(euler_rotation);
     glm::vec3 current_scale = scale;
 
+    // If there are keyframes, sample the animation at the current time and use that instead of the base transform
     if (!keyframes.empty()) {
         const auto [sampled_position, sampled_rotation, sampled_scale] = sample_keyframe_transform(keyframe_time);
         current_position = sampled_position;
@@ -180,6 +187,7 @@ void EditorScene::LocalTransformComponent::update_local_transform_from_json(cons
     euler_rotation = t["euler_rotation"];
     scale = t["scale"];
 
+    // Load keyframes if they exist, and sort them to ensure they're in the correct order
     keyframes.clear();
     if (t.contains("keyframes")) {
         for (const auto& keyframe_json : t["keyframes"]) {
@@ -207,32 +215,35 @@ void EditorScene::LocalTransformComponent::update_local_transform_from_json(cons
     }
 }
 
+ // Convert keyframes into json array
 json EditorScene::LocalTransformComponent::local_transform_into_json() const {
-    json keyframes_json = json::array();
-    for (const auto& keyframe : keyframes) {
-        keyframes_json.push_back({
-            {"time_seconds", keyframe.time_seconds},
-            {"position", keyframe.position},
-            {"euler_rotation", keyframe.euler_rotation},
-            {"scale", keyframe.scale},
-        });
-    }
+    json transform = json::object();
 
-    json result = {"local_transform", {
-        {"position", position},
-        {"euler_rotation", euler_rotation},
-        {"scale", scale},
-    }};
+    transform["position"] = position;
+    transform["euler_rotation"] = euler_rotation;
+    transform["scale"] = scale;
 
+    // Only save keyframe data if there are any
     if (!keyframes.empty()) {
-        result["local_transform"]["keyframes"] = keyframes_json;
-        result["local_transform"]["keyframe_time"] = keyframe_time;
-        result["local_transform"]["keyframe_speed"] = keyframe_speed;
-        result["local_transform"]["keyframe_playing"] = keyframe_playing;
-        result["local_transform"]["keyframe_loop"] = keyframe_loop;
+        json keyframes_json = json::array();
+
+        for (const auto& keyframe : keyframes) {
+            keyframes_json.push_back({
+                {"time_seconds", keyframe.time_seconds},
+                {"position", keyframe.position},
+                {"euler_rotation", keyframe.euler_rotation},
+                {"scale", keyframe.scale}
+            });
+        }
+
+        transform["keyframes"] = keyframes_json;
+        transform["keyframe_time"] = keyframe_time;
+        transform["keyframe_speed"] = keyframe_speed;
+        transform["keyframe_playing"] = keyframe_playing;
+        transform["keyframe_loop"] = keyframe_loop;
     }
 
-    return result;
+    return { "local_transform", transform };
 }
 
 void EditorScene::LocalTransformComponent::update_keyframe_animation(float dt) {
@@ -245,6 +256,7 @@ void EditorScene::LocalTransformComponent::update_keyframe_animation(float dt) {
         return;
     }
 
+    // Advance the keyframe time by the delta time multiplied by the speed
     keyframe_time += dt * keyframe_speed;
     if (keyframe_time > duration) {
         if (keyframe_loop) {
@@ -273,6 +285,7 @@ float EditorScene::LocalTransformComponent::keyframe_duration() const {
     return keyframes.back().time_seconds;
 }
 
+// Helper function to convert euler angles to quaternion, using the same convention as glm::eulerAngles (yaw around y, pitch around x, roll around z)
 glm::quat EditorScene::LocalTransformComponent::quaternion_from_euler(const glm::vec3& euler) {
     return glm::normalize(
         glm::angleAxis(euler.z, glm::vec3(0.0f, 0.0f, 1.0f)) *
@@ -281,6 +294,7 @@ glm::quat EditorScene::LocalTransformComponent::quaternion_from_euler(const glm:
     );
 }
 
+// Sample the keyframe animation at the given time, returning the interpolated position, rotation (as a quaternion), and scale
 std::tuple<glm::vec3, glm::quat, glm::vec3> EditorScene::LocalTransformComponent::sample_keyframe_transform(float time_seconds) const {
     if (keyframes.empty()) {
         return {position, quaternion_from_euler(euler_rotation), scale};
@@ -299,7 +313,8 @@ std::tuple<glm::vec3, glm::quat, glm::vec3> EditorScene::LocalTransformComponent
         const auto& frame = keyframes.back();
         return {frame.position, quaternion_from_euler(frame.euler_rotation), frame.scale};
     }
-
+    
+    // Find the two keyframes that the current time is between and interpolate between them using slerp (spherical linear interpolation)
     for (size_t i = 1; i < keyframes.size(); ++i) {
         const auto& earlier = keyframes[i - 1];
         const auto& later = keyframes[i];
@@ -321,6 +336,7 @@ std::tuple<glm::vec3, glm::quat, glm::vec3> EditorScene::LocalTransformComponent
     return {last_frame.position, quaternion_from_euler(last_frame.euler_rotation), last_frame.scale};
 }
 
+// Sort the keyframes in ascending order based on their time_seconds value
 void EditorScene::LocalTransformComponent::sort_keyframes() {
     std::sort(keyframes.begin(), keyframes.end(), [](const LocalTransformKeyFrame& a, const LocalTransformKeyFrame& b) {
         return a.time_seconds < b.time_seconds;
@@ -345,11 +361,11 @@ void EditorScene::LocalTransformComponent::add_keyframe_at_current_time() {
         keyframe.scale = sampled_scale;
     }
 
+    // If the current time already has a keyframe, add a new keyframe with + 0.1s to avoid conflict
     auto existing = std::find_if(keyframes.begin(), keyframes.end(), [this](const LocalTransformKeyFrame& candidate) {
         return candidate.time_seconds == keyframe_time;
     });
     if (existing != keyframes.end()) {
-        // If the current time already has a keyframe, add a new keyframe with + 0.1s to avoid conflict
         keyframe.time_seconds = std::max(keyframe_time, keyframe_duration()) + 0.1f;
         keyframe_time = keyframe.time_seconds;
         keyframes.push_back(keyframe);
@@ -359,12 +375,14 @@ void EditorScene::LocalTransformComponent::add_keyframe_at_current_time() {
     sort_keyframes();
 }
 
+// Remove the keyframe at the given index
 void EditorScene::LocalTransformComponent::remove_keyframe_at(size_t index) {
     if (index < keyframes.size()) {
         keyframes.erase(keyframes.begin() + index);
     }
 }
 
+// Remove all keyframes and reset animation state
 void EditorScene::LocalTransformComponent::clear_keyframes() {
     keyframes.clear();
     keyframe_time = 0.0f;
