@@ -6,6 +6,11 @@ std::vector<PointLight> LightScene::get_nearest_point_lights(glm::vec3 target, s
     return get_nearest_lights(point_lights, target, max_count, min_count);
 }
 
+// For directional lights, we don't need to do any proximity sorting, so just return the first `max_count` lights.
+std::vector<DirectionalLight> LightScene::get_directional_lights(size_t max_count, size_t min_count) const {
+    return get_lights(directional_lights, max_count, min_count);
+}
+
 template<typename Light>
 std::vector<Light> LightScene::get_nearest_lights(const std::unordered_set<std::shared_ptr<Light>>& lights, glm::vec3 target, size_t max_count, size_t min_count) {
     if (lights.size() <= max_count) {
@@ -44,6 +49,34 @@ std::vector<Light> LightScene::get_nearest_lights(const std::unordered_set<std::
     result.reserve(std::max(result_count, min_count));
     for (auto i = 0u; i < result_count; ++i) {
         result.push_back(sorted_vector[i].second);
+    }
+    while (result.size() < min_count) {
+        result.push_back(Light::off());
+    }
+    return result;
+}
+
+template<typename Light>
+std::vector<Light> LightScene::get_lights(const std::unordered_set<std::shared_ptr<Light>>& lights, size_t max_count, size_t min_count) {
+    if (lights.size() <= max_count) {
+        std::vector<Light> result{};
+        result.reserve(std::max(lights.size(), min_count));
+        for (const auto& light: lights) {
+            result.push_back(*light);
+        }
+        while (result.size() < min_count) {
+            result.push_back(Light::off());
+        }
+        return result;
+    }
+
+    std::vector<Light> result{};
+    result.reserve(std::max(max_count, min_count));
+    for (const auto& light: lights) {
+        result.push_back(*light);
+        if (result.size() == max_count) {
+            break;
+        }
     }
     while (result.size() < min_count) {
         result.push_back(Light::off());

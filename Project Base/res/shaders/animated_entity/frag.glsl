@@ -22,6 +22,12 @@ layout (std140) uniform PointLightArray {
 };
 #endif
 
+#if NUM_DL > 0
+layout (std140) uniform DirectionalLightArray {
+    DirectionalLightData directional_lights[NUM_DL];
+};
+#endif
+
 // Global data
 uniform vec3 ws_view_position;
 uniform float inverse_gamma;
@@ -43,6 +49,9 @@ void main() {
         material
         #if NUM_PL > 0
         , point_lights
+        #endif
+        #if NUM_DL > 0
+        , directional_lights
         #endif
     );
 

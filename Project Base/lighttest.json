@@ -1,0 +1,80 @@
+[
+    {
+        "diffuse_texture": {
+            "filename": "[WHITE]",
+            "is_flipped": false,
+            "is_srgb": false
+        },
+        "enabled": true,
+        "label": "Entity",
+        "local_transform": {
+            "euler_rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "position": [
+                0.0,
+                -0.009999999776482582,
+                0.0
+            ],
+            "scale": [
+                10.0,
+                1.0,
+                10.0
+            ]
+        },
+        "material": {
+            "ambient_tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "diffuse_tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "shininess": 128.0,
+            "specular_tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "model": "double_plane.obj",
+        "name": "Ground Plane",
+        "specular_map_texture": {
+            "filename": "[WHITE]",
+            "is_flipped": false,
+            "is_srgb": false
+        },
+        "texture_scale": [
+            1.0,
+            1.0
+        ]
+    },
+    {
+        "colour": [
+            1.0,
+            1.0,
+            1.0,
+            0.17000000178813934
+        ],
+        "enabled": true,
+        "label": "Directional Light",
+        "name": "New Directional Light",
+        "pitch": -1.2130038738250732,
+        "position": [
+            0.0,
+            5.0,
+            2.0999999046325684
+        ],
+        "visible": true,
+        "visual_scale": 1.5,
+        "yaw": -0.2617993950843811
+    }
+]
