@@ -321,12 +321,18 @@ std::tuple<glm::vec3, glm::quat, glm::vec3> EditorScene::LocalTransformComponent
         if (time_seconds <= later.time_seconds) {
             float segment_duration = later.time_seconds - earlier.time_seconds;
             float blend = segment_duration > 0.0f ? (time_seconds - earlier.time_seconds) / segment_duration : 0.0f;
-            glm::vec3 position = glm::mix(earlier.position, later.position, blend);
-            glm::vec3 scale = glm::mix(earlier.scale, later.scale, blend);
+            // Hermite interpolation factor
+            float t = blend * blend * (3.0f - 2.0f * blend);
+
+            // Interpolated position and scale
+            glm::vec3 position = glm::mix(earlier.position, later.position, t);
+            glm::vec3 scale    = glm::mix(earlier.scale, later.scale, t);
+
+            // Interpolated rotation using slerp (rotation remains spherical)
             glm::quat rotation = glm::slerp(
                 quaternion_from_euler(earlier.euler_rotation),
                 quaternion_from_euler(later.euler_rotation),
-                blend
+                t
             );
             return {position, rotation, scale};
         }
