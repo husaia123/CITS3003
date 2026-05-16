@@ -113,7 +113,7 @@ void EditorScene::EditorScene::open(const SceneContext& scene_context) {
     };
 }
 
-std::pair<TickResponseType, std::shared_ptr<SceneInterface>> EditorScene::EditorScene::tick(float /*delta_time*/, const SceneContext& scene_context) {
+std::pair<TickResponseType, std::shared_ptr<SceneInterface>> EditorScene::EditorScene::tick(float delta_time, const SceneContext& scene_context) {
     /// If the `Esc` key was pressed this tick, then tell the scene manager to exit
     if (scene_context.window.was_key_pressed(GLFW_KEY_ESCAPE)) {
         return {TickResponseType::Exit, nullptr};
@@ -135,6 +135,19 @@ std::pair<TickResponseType, std::shared_ptr<SceneInterface>> EditorScene::Editor
     if (scene_context.imgui_enabled) {
         add_imgui_selection_editor(scene_context);
         add_imgui_scene_hierarchy(scene_context);
+    }
+
+    /// Advance any local transform keyframe animations and update transforms on all scene elements.
+    for (auto& element : *scene_root) {
+        if (auto* local_transform = dynamic_cast<::EditorScene::LocalTransformComponent*>(element.get())) {
+            local_transform->update_keyframe_animation(delta_time);
+        }
+        element->visit_children_recursive([&](::EditorScene::SceneElement& child) {
+            if (auto* child_local_transform = dynamic_cast<::EditorScene::LocalTransformComponent*>(&child)) {
+                child_local_transform->update_keyframe_animation(delta_time);
+            }
+        });
+        element->update_instance_data();
     }
 
     /// Default to telling the SceneManager to continue ticking
