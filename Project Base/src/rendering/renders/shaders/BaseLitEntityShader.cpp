@@ -6,7 +6,8 @@ BaseLitEntityShader::BaseLitEntityShader(std::string name, const std::string& ve
                                          std::unordered_map<std::string, std::string> vert_defines,
                                          std::unordered_map<std::string, std::string> frag_defines) :
     BaseEntityShader(std::move(name), vertex_path, fragment_path, std::move(vert_defines), std::move(frag_defines)),
-    point_lights_ubo({}, false) {
+    point_lights_ubo({}, false),
+    directional_lights_ubo({}, false) {
 
     get_uniforms_set_bindings();
 }
@@ -24,6 +25,32 @@ void BaseLitEntityShader::get_uniforms_set_bindings() {
     set_binding("specular_map_texture", 1);
     // Uniform block bindings
     set_block_binding("PointLightArray", POINT_LIGHT_BINDING);
+    set_block_binding("DirectionalLightArray", DIRECTIONAL_LIGHT_BINDING);
+}
+
+// Sets the directional lights for the shader
+void BaseLitEntityShader::set_directional_lights(const std::vector<DirectionalLight>& directional_lights) {
+    uint count = std::min(MAX_DL, (uint) directional_lights.size());
+
+    // Convert to GPU format (i.e. normalize direction) and apply colour scaling
+    for (uint i = 0; i < count; i++) {
+        const DirectionalLight& directional_light = directional_lights[i];
+        glm::vec3 direction = directional_light.direction;
+        if (glm::length(direction) > 0.0f) {
+            direction = glm::normalize(direction);
+        } else {
+            direction = glm::vec3{0.0f, -1.0f, 0.0f};
+        }
+
+        glm::vec3 scaled_colour = glm::vec3(directional_light.colour) * directional_light.colour.a;
+        directional_lights_ubo.data[i].direction = direction;
+        directional_lights_ubo.data[i].colour = scaled_colour;
+    }
+
+    // Update shader define and recompile if number of lights has changed, then upload UBO data
+    set_frag_define("NUM_DL", Formatter() << count);
+    directional_lights_ubo.bind(DIRECTIONAL_LIGHT_BINDING);
+    directional_lights_ubo.upload();
 }
 
 void BaseLitEntityShader::set_instance_data(const BaseLitEntityInstanceData& instance_data) {

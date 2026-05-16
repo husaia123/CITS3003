@@ -1,0 +1,96 @@
+[
+    {
+        "diffuse_texture": {
+            "filename": "[WHITE]",
+            "is_flipped": false,
+            "is_srgb": false
+        },
+        "enabled": true,
+        "label": "Entity",
+        "local_transform": {
+            "euler_rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "position": [
+                0.0,
+                -0.009999999776482582,
+                0.0
+            ],
+            "scale": [
+                10.0,
+                1.0,
+                10.0
+            ]
+        },
+        "material": {
+            "ambient_tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "diffuse_tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ],
+            "shininess": 128.0,
+            "specular_tint": [
+                1.0,
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "model": "double_plane.obj",
+        "name": "Ground Plane",
+        "specular_map_texture": {
+            "filename": "[WHITE]",
+            "is_flipped": false,
+            "is_srgb": false
+        },
+        "texture_scale": [
+            1.0,
+            1.0
+        ]
+    },
+    {
+        "colour": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "enabled": true,
+        "label": "Point Light",
+        "name": "New Point Light",
+        "position": [
+            0.0,
+            1.0,
+            0.0
+        ],
+        "visible": true,
+        "visual_scale": 1.0
+    },
+    {
+        "colour": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "direction": [
+            -0.9262665510177612,
+            -0.06895574927330017,
+            -0.3705068826675415
+        ],
+        "enabled": true,
+        "label": "Directional Light",
+        "name": "New Directional Light",
+        "visible": true,
+        "visual_scale": 1.0
+    }
+]
