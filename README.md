@@ -35,10 +35,3 @@ This project is configured and tested on **Windows**.
    ```powershell
    .\build\Debug\cits3003_project.exe
    ```
-
-## Notes
-
-cd "Project Base"
-cmake -S . -B build
-cmake --build build --config Debug
-.\build\Debug\cits3003_project.exe
