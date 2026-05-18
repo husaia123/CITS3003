@@ -24,6 +24,7 @@ struct LightCalculatioData {
 struct PointLightData {
     vec3 position;
     vec3 colour;
+    vec3 attenuation; // x=constant, y=linear, z=quadratic
 };
 
 struct DirectionalLightData {
@@ -40,8 +41,8 @@ void point_light_calculation(PointLightData point_light, LightCalculatioData cal
     vec3 ws_light_offset = point_light.position - calculation_data.ws_frag_position;
 
     float distance = length(ws_light_offset);
-    float attenuation = 1.0f / (1.0f + 0.09f * distance + 0.032f * distance * distance);
-
+    float attenuation = 1.0f / max(point_light.attenuation.x + point_light.attenuation.y * distance + point_light.attenuation.z * distance * distance, 0.0001f);
+    
     // Ambient
     vec3 ambient_component = ambient_factor * point_light.colour * attenuation;
 

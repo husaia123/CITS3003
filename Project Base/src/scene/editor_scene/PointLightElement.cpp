@@ -41,6 +41,11 @@ std::unique_ptr<EditorScene::PointLightElement> EditorScene::PointLightElement::
     light_element->visible = j["visible"];
     light_element->visual_scale = j["visual_scale"];
 
+    // Load attenuation (with safe defaults if missing)
+    light_element->light->attenuation.x = j.value("attenuation_constant", 1.0f);
+    light_element->light->attenuation.y = j.value("attenuation_linear", 0.09f);
+    light_element->light->attenuation.z = j.value("attenuation_quadratic", 0.032f);
+
     light_element->update_instance_data();
     return light_element;
 }
@@ -51,6 +56,11 @@ json EditorScene::PointLightElement::into_json() const {
         {"colour",       light->colour},
         {"visible",      visible},
         {"visual_scale", visual_scale},
+
+        // Save attenuation
+        {"attenuation_constant", light->attenuation.x},
+        {"attenuation_linear",   light->attenuation.y},
+        {"attenuation_quadratic",light->attenuation.z},
     };
 }
 
@@ -77,6 +87,14 @@ void EditorScene::PointLightElement::add_imgui_edit_section(MasterRenderScene& r
     transformUpdated |= ImGui::DragFloat("Visual Scale", &visual_scale, 0.01f, 0.0f, FLT_MAX);
     ImGui::DragDisableCursor(scene_context.window);
 
+    ImGui::Spacing();
+    ImGui::Text("Attenuation");
+
+    transformUpdated |= ImGui::DragFloat("Constant",  &light->attenuation.x, 0.001f, 0.0f, 10.0f);
+    transformUpdated |= ImGui::DragFloat("Linear",    &light->attenuation.y, 0.001f, 0.0f, 10.0f);
+    transformUpdated |= ImGui::DragFloat("Quadratic", &light->attenuation.z, 0.001f, 0.0f, 10.0f);
+    ImGui::DragDisableCursor(scene_context.window);
+    
     if (transformUpdated) {
         update_instance_data();
     }

@@ -19,6 +19,11 @@ namespace EditorScene {
         std::shared_ptr<PointLight> light;
         std::shared_ptr<EmissiveEntityRenderer::Entity> light_sphere;
 
+        // Attenuation controls
+        float attenuation_constant = 1.0f;
+        float attenuation_linear = 0.09f;
+        float attenuation_quadratic = 0.032f;
+
         PointLightElement(const ElementRef& parent, std::string name, glm::vec3 position, std::shared_ptr<PointLight> light, std::shared_ptr<EmissiveEntityRenderer::Entity> light_sphere) :
             SceneElement(parent, std::move(name)), position(position), light(std::move(light)), light_sphere(std::move(light_sphere)) {}
 

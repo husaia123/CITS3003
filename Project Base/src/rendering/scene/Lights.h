@@ -25,12 +25,12 @@ struct PointLight {
     glm::vec3 position{};
     // Alpha components are just used to store a scalar that is applied before passing to the GPU
     glm::vec4 colour{};
+    glm::vec3 attenuation{1.0f, 0.09f, 0.032f}; // x=constant, y=linear, z=quadratic
 
-    // On GPU format
-    // alignas used to conform to std140 for direct binary usage with glsl
     struct Data {
         alignas(16) glm::vec3 position;
         alignas(16) glm::vec3 colour;
+        alignas(16) glm::vec3 attenuation;
     };
 };
 
